@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<info>
+    <id>fuel</id>
+    <name>Fuel</name>
+    <description>My first ownCloud app</description>
+    <licence>AGPL</licence>
+    <author>Christoph Wurst</author>
+    <version>0.0.1</version>
+    <namespace>Fuel</namespace>
+    <category>other</category>
+    <dependencies>
+        <owncloud min-version="8" />
+    </dependencies>
+</info>
