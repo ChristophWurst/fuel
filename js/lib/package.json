@@ -1,0 +1,9 @@
+{
+	"name": "owncloud-fuel",
+	"description": "Fuel consumption tracker",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"backbone": "1.2.x"
+	}
+}
