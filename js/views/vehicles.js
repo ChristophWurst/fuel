@@ -15,7 +15,6 @@ var VehiclesView = Marionette.CollectionView.extend({
 	childView: VehicleView,
 	initialize: function (options) {
 		options = options || {};
-		this.collection = options.collection;
-		this.listenTo(this.model, 'change', this.render);
+		this.listenTo(this.collection, 'change', this.render);
 	}
 });

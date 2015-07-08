@@ -11,4 +11,16 @@
  */
 
 var Record = Backbone.Model.extend({
+	defaults: {
+		id: null,
+		date: null,
+		odometer: 0.0,
+		fuel: 0.0,
+		cost: 0.0,
+		full: true
+	}
+});
+
+var RecordCollection = Backbone.Collection.extend({
+	model: Record
 });

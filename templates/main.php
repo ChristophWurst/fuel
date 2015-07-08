@@ -10,8 +10,11 @@ script('fuel', 'lib/node_modules/backbone.marionette/lib/backbone.marionette.min
 /**
  * JavaScript files
  */
+script('fuel', 'controllers/VehicleController');
 script('fuel', 'models/record');
 script('fuel', 'models/vehicle');
+script('fuel', 'views/record');
+script('fuel', 'views/records');
 script('fuel', 'views/vehicle');
 script('fuel', 'views/vehicles');
 script('fuel', 'fuel');
@@ -31,7 +34,10 @@ style('fuel', 'style');
 
 	<div id="app-content">
 		<div id="app-content-wrapper">
-			<?php print_unescaped($this->inc('part.content')); ?>
+			<div id="record-list">
+			</div>
+			<div id="statistics">
+			</div>
 		</div>
 	</div>
 </div>

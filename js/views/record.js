@@ -1,4 +1,4 @@
-/* global Backbone, OC */
+/* global Marionette */
 
 /**
  * ownCloud - fuel
@@ -10,15 +10,6 @@
  * @copyright Christoph Wurst 2015
  */
 
-var Vehicle = Backbone.Model.extend({
-	defaults: {
-		id: null,
-		name: '',
-		records: new RecordCollection(),
-		active: false
-	}
-});
-
-var VehicleCollection = Backbone.Collection.extend({
-	model: Vehicle
+var RecordView = Marionette.ItemView.extend({
+	template: '#record-list-item-template'
 });

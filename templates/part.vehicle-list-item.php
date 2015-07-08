@@ -12,6 +12,9 @@
 
 ?>
 <script id="vehicle-list-item-template" type="text/html">
-    <a href="#"><%= name %></a>
+    <a href="#vehicle/<%= id %>"
+       class="<%= active ? 'active' : ''%>">
+	<%= name %>
+    </a>
 </script>
 

@@ -1,4 +1,4 @@
-/* global OC, Marionette, Backbone */
+/* global OC, Marionette, Backbone, VehicleController, _, */
 
 /**
  * ownCloud - Fuel
@@ -11,41 +11,67 @@
  */
 
 var FuelApplication = Marionette.Application.extend({
+	baseUrl: OC.generateUrl('/apps/fuel/'),
+	vehicles: new VehicleCollection([
+		{
+			id: 1,
+			name: 'Vehicle 1'
+		},
+		{
+			id: 2,
+			name: 'Vehicle 2'
+		}
+	]),
 	initialize: function () {
 		console.log('application initialized');
 	}
 });
 
+var FuelRouter = Marionette.AppRouter.extend({
+	controller: VehicleController
+});
+
+window.app = new FuelApplication;
+
+/**
+ * Application regions
+ */
+app.addRegions({
+	vehiclesRegion: '#vehicle-list',
+	recordsRegion: '#record-list',
+	statisticsRegion: '#statistics'
+});
+
+/**
+ * Initialize vehicle UI
+ */
+app.addInitializer(function () {
+	var vehiclesView = new VehiclesView({
+		collection: app.vehicles
+	});
+	app.vehiclesRegion.show(vehiclesView);
+});
+
+app.on('start', function () {
+	// Start history once our application is ready
+	Backbone.history.start();
+
+	var vehicleRoutes = {
+		'': 'index',
+		'vehicle/:id': 'vehicle'
+	};
+
+	// Prefix URLs
+	var prefixedRoutes = {};
+	for (var route in vehicleRoutes) {
+		var method = vehicleRoutes[route];
+		prefixedRoutes[app.baseUrl + route] = method;
+	}
+
+	app.router = new FuelRouter();
+	app.router.processAppRoutes(VehicleController, vehicleRoutes);
+});
+
 $(document).ready(function () {
-	var app = new FuelApplication;
-
-	/**
-	 * Application regions
-	 */
-	app.addRegions({
-		vehiclesRegion: '#vehicle-list'
-	});
-
-	app.addInitializer(function (options) {
-		var vehiclesView = new VehiclesView({
-			collection: options.vehicles
-		});
-		app.vehiclesRegion.show(vehiclesView);
-	});
-
-	app.on('start', function () {
-		// Start history once our application is ready
-		Backbone.history.start();
-	});
-
-	app.start({
-		vehicles: new VehicleCollection([
-			{
-				name: 'Vehicle 1'
-			},
-			{
-				name: 'Vehicle 2'
-			}
-		])
-	});
+	app.start();
 });
