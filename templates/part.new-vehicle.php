@@ -11,15 +11,19 @@
 ?>
 
 <script id="new-vehicle-template" type="text/html">
-	<a id="new-vehicle-btn" class="<%= showButton() %>">
-		<?php p($l->t('New vehicle')); ?>
-	</a>
-	<div>
-		<div class="new-vehicle-add-dialog <%= showDialog() %>">
-			<span>
-				<input class="new-vehicle-name" type="text">
-				<input class="new-vehicle-add primary icon-checkmark-white" type="button">
-			</span>
+	<li class="<%= showButton() %>">
+		<a id="new-vehicle-btn">
+			<?php p($l->t('New vehicle')); ?>
+		</a>
+	</li>
+	<li>
+		<div>
+			<div class="new-vehicle-add-dialog <%= showDialog() %>">
+				<span>
+					<input class="new-vehicle-name" type="text">
+					<input class="new-vehicle-add primary icon-checkmark-white" type="button">
+				</span>
+			</div>
 		</div>
-	</div>
+	</li>
 </script>

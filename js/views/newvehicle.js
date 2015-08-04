@@ -13,7 +13,7 @@ define(function (require) {
 		Backbone = require('backbone');
 
 	return Marionette.ItemView.extend({
-		opened: false,
+		tagname: 'ul',
 		template: '#new-vehicle-template',
 		templateHelpers: function () {
 			return {
@@ -30,8 +30,6 @@ define(function (require) {
 			'click document': 'onClick'
 		},
 		initialize: function () {
-			console.log('init');
-
 			var State = new Backbone.Model({
 				opened: false
 			});
@@ -40,7 +38,8 @@ define(function (require) {
 			// Close dialog on ESC
 			var _this = this;
 			$('body').bind('keyup', function (e) {
-				if (e.keyCode === 27 && _this.$('.new-vehicle-name').is(':focus')) {
+				var inputFocused = _this.$('.new-vehicle-name').is(':focus');
+				if (e.keyCode === 27 && inputFocused) {
 					_this.close();
 				}
 			});
