@@ -15,6 +15,7 @@ define(function (require) {
 	var $ = require('jquery'),
 		Backbone = require('backbone'),
 		Marionette = require('marionette'),
+		_ = require('underscore'),
 		VehicleController = require('controllers/VehicleController'),
 		VehicleCollection = require('models/VehicleCollection'),
 		VehiclesView = require('views/vehicles'),
@@ -25,6 +26,29 @@ define(function (require) {
 		vehicles: new VehicleCollection(),
 		initialize: function () {
 			console.log('application initialized');
+		},
+		addVehicle: function(options) {
+			var defaults = {
+				success: function() {},
+				error: function() {},
+				complete: function() {},
+				name: ''
+			};
+			options = _.defaults(options, defaults);
+
+			var url = OC.generateUrl('/apps/fuel/vehicles');
+			$.ajax(url, {
+				method: 'POST',
+				data: {
+					name: options.name
+				},
+				success: function(vehicle) {
+					app.vehicles.add(vehicle);
+					options.success(vehicle);
+				},
+				error: options.error,
+				complete: options.complete
+			});
 		}
 	});
 
@@ -51,7 +75,9 @@ define(function (require) {
 		var vehicleView = new VehiclesView({
 			collection: app.vehicles
 		});
-		var newVehicleView = new NewVehicleView();
+		var newVehicleView = new NewVehicleView({
+			app: app
+		});
 		app.vehiclesRegion.show(vehicleView);
 		app.newVehicleRegion.show(newVehicleView);
 	});
@@ -72,7 +98,7 @@ define(function (require) {
 			prefixedRoutes[app.baseUrl + route] = method;
 		}
 
-		app.vehicles.url = app.baseUrl + '/vehicles';
+		app.vehicles.url = app.baseUrl + 'vehicles';
 		app.vehicles.fetch();
 
 		app.router = new FuelRouter();

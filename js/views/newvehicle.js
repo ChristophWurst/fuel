@@ -13,6 +13,7 @@ define(function (require) {
 		Backbone = require('backbone');
 
 	return Marionette.ItemView.extend({
+		app: null,
 		tagname: 'ul',
 		template: '#new-vehicle-template',
 		templateHelpers: function () {
@@ -27,11 +28,14 @@ define(function (require) {
 		},
 		events: {
 			'click #new-vehicle-btn': 'open',
-			'click document': 'onClick'
+			'click .new-vehicle-add': 'add'
 		},
-		initialize: function () {
+		initialize: function (options) {
+			this.app = options.app;
+
 			var State = new Backbone.Model({
-				opened: false
+				opened: false,
+				loading: false
 			});
 			this.model = State;
 
@@ -43,6 +47,8 @@ define(function (require) {
 					_this.close();
 				}
 			});
+			
+			this.model.on('change:loading', this.loading, this);
 		},
 		open: function () {
 			this.model.set('opened', true);
@@ -52,6 +58,32 @@ define(function (require) {
 		close: function () {
 			this.model.set('opened', false);
 			this.render();
+		},
+		loading: function(state, loading) {
+			if (loading) {
+				this.$('.new-vehicle-name').prop('disabled', true);
+				this.$('.new-vehicle-add').prop('disabled', true);
+			} else {
+				this.$('.new-vehicle-name').prop('disabled', false);
+				this.$('.new-vehicle-add').prop('disabled', false);
+			}
+		},
+		add: function () {
+			this.model.set('loading', true);
+			var name = this.$('.new-vehicle-name').val();
+			var _this = this;
+			this.app.addVehicle({
+				name: name,
+				success: function () {
+					_this.close();
+				},
+				error: function () {
+					//TODO: show error message
+				},
+				complete: function () {
+					_this.model.set('loading', false);
+				}
+			});
 		}
 	});
 });
