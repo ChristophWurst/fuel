@@ -17,20 +17,12 @@ define(function (require) {
 		Marionette = require('marionette'),
 		VehicleController = require('controllers/VehicleController'),
 		VehicleCollection = require('models/VehicleCollection'),
-		VehiclesView = require('views/vehicles');
+		VehiclesView = require('views/vehicles'),
+		NewVehicleView = require('views/newvehicle');
 
 	var FuelApplication = Marionette.Application.extend({
 		baseUrl: OC.generateUrl('/apps/fuel/'),
-		vehicles: new VehicleCollection(),/*[
-			{
-				id: 1,
-				name: 'Vehicle 1'
-			},
-			{
-				id: 2,
-				name: 'Vehicle 2'
-			}
-		]),*/
+		vehicles: new VehicleCollection(),
 		initialize: function () {
 			console.log('application initialized');
 		}
@@ -40,13 +32,14 @@ define(function (require) {
 		controller: VehicleController
 	});
 
-	var app = new FuelApplication;
+	var app = new FuelApplication();
 
 	/**
 	 * Application regions
 	 */
 	app.addRegions({
 		vehiclesRegion: '#vehicle-list',
+		newVehicleRegion: '#new-vehicle',
 		recordsRegion: '#record-list',
 		statisticsRegion: '#statistics'
 	});
@@ -55,10 +48,12 @@ define(function (require) {
 	 * Initialize vehicle UI
 	 */
 	app.addInitializer(function () {
-		var view = new VehiclesView({
+		var vehicleView = new VehiclesView({
 			collection: app.vehicles
 		});
-		app.vehiclesRegion.show(view);
+		var newVehicleView = new NewVehicleView();
+		app.vehiclesRegion.show(vehicleView);
+		app.newVehicleRegion.show(newVehicleView);
 	});
 
 	app.on('start', function () {
@@ -76,7 +71,7 @@ define(function (require) {
 			var method = vehicleRoutes[route];
 			prefixedRoutes[app.baseUrl + route] = method;
 		}
-		
+
 		app.vehicles.url = app.baseUrl + '/vehicles';
 		app.vehicles.fetch();
 

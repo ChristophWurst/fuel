@@ -1,5 +1,21 @@
-#hello {
-	color: red;
+#new-vehicle-btn {
+	padding-left: 23px !important;
+}
+#new-vehicle-btn::before {
+	position: absolute;
+	content: "+";
+	font-weight: bold;
+	font-size: 150%;
+	left: 7px;
+}
+.new-vehicle-add-dialog {
+	
+}
+.new-vehicle-name {
+	
+}
+.new-vehicle-add {
+	
 }
 
 #record-list, #statistics {
@@ -13,4 +29,8 @@
 
 #statistics {
 	widt: 70%;
+}
+
+.hidden {
+	display: none;
 }
