@@ -1,5 +1,3 @@
-/* global Marionette */
-
 /**
  * ownCloud - fuel
  *
@@ -10,6 +8,10 @@
  * @copyright Christoph Wurst 2015
  */
 
-var RecordView = Marionette.ItemView.extend({
-	template: '#record-list-item-template'
+define(function () {
+	var Marionette = require('marionette');
+
+	return Marionette.ItemView.extend({
+		template: '#record-list-item-template'
+	});
 });

@@ -1,4 +1,3 @@
-<?php
 /**
  * ownCloud - fuel
  *
@@ -8,11 +7,14 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
-?>
-<script id="vehicle-list-item-template" type="text/html">
-    <a href="#vehicle/<%= id %>"
-       class="<%= active ? 'active' : ''%>">
-        <%= name %>
-    </a>
-</script>
 
+define(function (require) {
+	var Backbone = require('backbone'),
+		Vehicle = require('models/Vehicle');
+
+	var VehicleCollection = Backbone.Collection.extend({
+		model: Vehicle
+	});
+
+	return VehicleCollection;
+});

@@ -1,4 +1,6 @@
-/* global Backbone, OC */
+<?php
+
+namespace OCA\Fuel\Service;
 
 /**
  * ownCloud - fuel
@@ -9,16 +11,8 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
+use Exception;
 
-var Vehicle = Backbone.Model.extend({
-	defaults: {
-		id: null,
-		name: '',
-		records: new RecordCollection(),
-		active: false
-	}
-});
-
-var VehicleCollection = Backbone.Collection.extend({
-	model: Vehicle
-});
+class ServiceException extends Exception {
+	
+}

@@ -1,5 +1,3 @@
-/* global Backbone */
-
 /**
  * ownCloud - fuel
  *
@@ -10,17 +8,11 @@
  * @copyright Christoph Wurst 2015
  */
 
-var Record = Backbone.Model.extend({
-	defaults: {
-		id: null,
-		date: null,
-		odometer: 0.0,
-		fuel: 0.0,
-		cost: 0.0,
-		full: true
-	}
-});
+define(function (require) {
+	var Backbone = require('backbone'),
+		Record = require('models/Record');
 
-var RecordCollection = Backbone.Collection.extend({
-	model: Record
+	return Backbone.Collection.extend({
+		model: Record
+	});
 });

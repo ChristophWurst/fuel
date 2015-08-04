@@ -1,29 +1,18 @@
 <?php
-
 /**
  * JavaScript libraries
  */
-script('fuel', 'lib/node_modules/backbone/backbone-min');
-script('fuel', 'lib/node_modules/handlebars/dist/handlebars.min');
-script('fuel', 'lib/node_modules/backbone.marionette/lib/backbone.marionette.min');
+script('fuel', 'lib/node_modules/requirejs/require');
 
 /**
- * JavaScript files
+ * Main JS file
  */
-script('fuel', 'controllers/VehicleController');
-script('fuel', 'models/record');
-script('fuel', 'models/vehicle');
-script('fuel', 'views/record');
-script('fuel', 'views/records');
-script('fuel', 'views/vehicle');
-script('fuel', 'views/vehicles');
-script('fuel', 'fuel');
+script('fuel', 'require_config');
 
 /**
  * CSS style sheets
  */
 style('fuel', 'style');
-
 ?>
 
 <div id="app">
@@ -43,7 +32,6 @@ style('fuel', 'style');
 </div>
 
 <?php
-
 /**
  * Templates
  */

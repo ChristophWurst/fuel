@@ -8,25 +8,24 @@
  * @copyright Christoph Wurst 2015
  */
 
-var VehicleController = (function () {
-	this.index = function () {
-		/**
-		 * @todo do this before any request
-		 */
-		app.vehicles.forEach(function (vehicle) {
-			vehicle.set('active', false);
-		});
+define(function (require) {
+	return {
+		index: function () {
+			/**
+			 * @todo do this before any request
+			 */
+			require('app').vehicles.forEach(function (vehicle) {
+				vehicle.set('active', false);
+			});
+		},
+		vehicle: function (id) {
+			/**
+			 * @todo do this before any request
+			 */
+			require('app').vehicles.forEach(function (vehicle) {
+				vehicle.set('active', false);
+			});
+			require('app').vehicles.get(id).set('active', true);
+		}
 	};
-
-	this.vehicle = function (id) {
-		/**
-		 * @todo do this before any request
-		 */
-		app.vehicles.forEach(function (vehicle) {
-			vehicle.set('active', false);
-		});
-		app.vehicles.get(id).set('active', true);
-	};
-
-	return this;
-}());
+});

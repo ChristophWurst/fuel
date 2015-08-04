@@ -1,5 +1,3 @@
-/* global Handlebars, Marionette, VehicleView */
-
 /**
  * ownCloud - fuel
  *
@@ -10,11 +8,16 @@
  * @copyright Christoph Wurst 2015
  */
 
-var VehiclesView = Marionette.CollectionView.extend({
-	tagName: 'ul',
-	childView: VehicleView,
-	initialize: function (options) {
-		options = options || {};
-		this.listenTo(this.collection, 'change', this.render);
-	}
+define(function (require) {
+	var VehicleView = require('views/vehicle'),
+		Marionette = require('marionette');
+
+	return Marionette.CollectionView.extend({
+		tagName: 'ul',
+		childView: VehicleView,
+		initialize: function (options) {
+			options = options || {};
+			this.listenTo(this.collection, 'change', this.render);
+		}
+	});
 });

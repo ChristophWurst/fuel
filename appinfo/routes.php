@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ownCloud - fuel
  *
@@ -8,7 +9,6 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
-
 /**
  * Create your routes in here. The name is the lowercase name of the controller
  * without the controller part, the stuff after the hash is the method.
@@ -18,8 +18,16 @@
  * it's instantiated in there
  */
 return [
-    'routes' => [
-	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-	   ['name' => 'page#do_echo', 'url' => '/echo', 'verb' => 'POST'],
-    ]
+	'resources' => [
+		'vehicle' => [
+			'url' => '/vehicles',
+		]
+	],
+	'routes' => [
+		[
+			'name' => 'page#index',
+			'url' => '/',
+			'verb' => 'GET'
+		],
+	]
 ];

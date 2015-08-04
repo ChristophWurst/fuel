@@ -9,13 +9,15 @@
  */
 
 define(function (require) {
-	var Marionette = require('marionette');
+	var Backbone = require('backbone'),
+		RecordCollection = require('models/RecordCollection');
 
-	return Marionette.ItemView.extend({
-		tagName: 'li',
-		template: '#vehicle-list-item-template',
-		initialize: function () {
-			this.listenTo(this.model, 'change', this.render);
+	return Backbone.Model.extend({
+		defaults: {
+			id: null,
+			name: '',
+			records: new RecordCollection(),
+			active: false
 		}
 	});
 });

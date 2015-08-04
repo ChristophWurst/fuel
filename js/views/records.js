@@ -1,5 +1,3 @@
-/* global RecordView, Marionette */
-
 /**
  * ownCloud - fuel
  *
@@ -10,9 +8,14 @@
  * @copyright Christoph Wurst 2015
  */
 
-var RecordsView = Marionette.CollectionView.extend({
-	childView: RecordView,
-	initialize: function(options) {
-		
-	}
+define(function () {
+	var Marionette = require('marionette'),
+		RecordView = require('views/record');
+
+	return Marionette.CollectionView.extend({
+		childView: RecordView,
+		initialize: function (options) {
+
+		}
+	});
 });
