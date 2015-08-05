@@ -17,6 +17,7 @@ define(function (require) {
 		Vehicle = require('models/Vehicle');
 
 	var VehicleCollection = Backbone.Collection.extend({
+		comparator: 'name', // Sort vehicles by name
 		model: Vehicle,
 		url: OC.generateUrl('/apps/fuel/vehicles')
 	});
