@@ -7,7 +7,7 @@
     <author>Christoph Wurst</author>
     <version>0.0.3</version>
     <namespace>Fuel</namespace>
-    <category>other</category>
+    <category>tools</category>
     <dependencies>
         <owncloud min-version="8" />
     </dependencies>
