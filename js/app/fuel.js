@@ -19,11 +19,14 @@ define(function (require) {
 		VehicleController = require('controllers/VehicleController'),
 		VehicleCollection = require('models/VehicleCollection'),
 		VehiclesView = require('views/vehicles'),
+		RecordsCollection = require('models/RecordCollection'),
+		RecordsView = require('views/records'),
 		NewVehicleView = require('views/newvehicle');
 
 	var FuelApplication = Marionette.Application.extend({
 		baseUrl: OC.generateUrl('/apps/fuel/'),
 		vehicles: new VehicleCollection(),
+		records: new RecordsCollection(),
 		initialize: function () {
 			console.log('application initialized');
 		},
@@ -72,14 +75,18 @@ define(function (require) {
 	 * Initialize vehicle UI
 	 */
 	app.addInitializer(function () {
-		var vehicleView = new VehiclesView({
-			collection: app.vehicles
-		});
 		var newVehicleView = new NewVehicleView({
 			app: app
 		});
-		app.vehiclesRegion.show(vehicleView);
+		var vehicleView = new VehiclesView({
+			collection: app.vehicles
+		});
+		var recordsView = new RecordsView({
+			collection: app.records
+		});
 		app.newVehicleRegion.show(newVehicleView);
+		app.vehiclesRegion.show(vehicleView);
+		app.recordsRegion.show(recordsView);
 	});
 
 	app.on('start', function () {

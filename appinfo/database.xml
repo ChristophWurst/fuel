@@ -31,4 +31,54 @@
             </field>
         </declaration>
     </table>
+    <table>
+        <name>*dbprefix*fuel_records</name>
+        <declaration>
+            <field>
+                <name>id</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+                <autoincrement>true</autoincrement>
+                <unsigned>true</unsigned>
+                <primary>true</primary>
+                <length>8</length>
+            </field>
+	    <field>
+                <name>vehicle_id</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+                <unsigned>true</unsigned>
+                <length>8</length>
+            </field>
+            <field>
+                <name>odo</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+                <unsigned>true</unsigned>
+                <length>8</length>
+            </field>
+	    <field>
+                <name>fuel</name>
+                <type>float</type>
+                <notnull>true</notnull>
+            </field>
+	    <field>
+                <name>price</name>
+                <type>float</type>
+                <notnull>true</notnull>
+            </field>
+	    <field>
+                <name>date</name>
+                <type>date</type>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>user_id</name>
+                <type>text</type>
+                <length>200</length>
+                <default></default>
+                <notnull>true</notnull>
+            </field>
+        </declaration>
+    </table>
 </database>

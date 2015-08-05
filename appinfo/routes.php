@@ -21,6 +21,9 @@ return [
 	'resources' => [
 		'vehicle' => [
 			'url' => '/vehicles',
+		],
+		'records' => [
+			'url' => '/vehicles/{vehicleId}/records'
 		]
 	],
 	'routes' => [

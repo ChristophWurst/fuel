@@ -1,4 +1,7 @@
 <?php
+
+namespace OCA\Fuel\AppInfo;
+
 /**
  * ownCloud - fuel
  *
@@ -8,9 +11,6 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
-
-namespace OCA\Fuel\AppInfo;
-
 \OCP\App::addNavigationEntry([
 	// the string under which your app will be referenced in owncloud
 	'id' => 'fuel',

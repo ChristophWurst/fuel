@@ -12,6 +12,10 @@ define(function () {
 	var Marionette = require('marionette');
 
 	return Marionette.ItemView.extend({
-		template: '#record-list-item-template'
+		tagName: 'li',
+		template: '#record-list-item-template',
+		initialize: function () {
+			this.listenTo(this.model, 'change', this.render);
+		}
 	});
 });

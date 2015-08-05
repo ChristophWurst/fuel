@@ -1,3 +1,4 @@
+<?php
 /**
  * ownCloud - fuel
  *
@@ -7,16 +8,11 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
+?>
 
-define(function (require) {
-	var Backbone = require('backbone');
-
-	return Backbone.Model.extend({
-		defaults: {
-			id: null,
-			name: '',
-			records: null,
-			active: false
-		}
-	});
-});
+<script id="record-list-item-template" type="text/html">
+	<a href="#vehicle/<%= vehicleId %>/record/<%= id %>"
+	   class="<%= active ? 'active' : ''%>">
+		<%= id %>
+	</a>
+</script>

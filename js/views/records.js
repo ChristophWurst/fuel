@@ -8,14 +8,15 @@
  * @copyright Christoph Wurst 2015
  */
 
-define(function () {
-	var Marionette = require('marionette'),
-		RecordView = require('views/record');
+define(function (require) {
+	var RecordView = require('views/record'),
+		Marionette = require('marionette');
 
 	return Marionette.CollectionView.extend({
+		tagName: 'ul',
 		childView: RecordView,
-		initialize: function (options) {
-
+		initialize: function () {
+			this.listenTo(this.collection, 'change', this.render);
 		}
 	});
 });

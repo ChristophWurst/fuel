@@ -35,5 +35,6 @@ style('fuel', 'style');
 /**
  * Templates
  */
-print_unescaped($this->inc('part.vehicle-list-item'));
 print_unescaped($this->inc('part.new-vehicle'));
+print_unescaped($this->inc('part.vehicle-list-item'));
+print_unescaped($this->inc('part.record-list-item'));

@@ -12,12 +12,12 @@ namespace OCA\Fuel\Service;
  * @copyright Christoph Wurst 2015
  */
 use Exception;
-use OCP\AppFramework\Db\DoesNotExistException;
-use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCA\Fuel\Db\Vehicle;
 use OCA\Fuel\Db\VehicleMapper;
 
 class VehicleService {
+
+	use ExceptionHandler;
 
 	private $mapper;
 
@@ -25,18 +25,12 @@ class VehicleService {
 		$this->mapper = $mapper;
 	}
 
-	public function findAll($userId) {
-		return $this->mapper->findAll($userId);
-	}
-
-	public function handleException($e) {
-		if ($e instanceof DoesNotExistException || $e instanceof MultipleObjectsReturnedException) {
-			throw new DoesNotExistException($e->getMessage());
-		} else {
-			throw $e;
-		}
-	}
-
+	/**
+	 * 
+	 * @param int $id
+	 * @param string $userId
+	 * @return Vehicle
+	 */
 	public function find($id, $userId) {
 		try {
 			return $this->mapper->find($id, $userId);
@@ -45,6 +39,21 @@ class VehicleService {
 		}
 	}
 
+	/**
+	 * 
+	 * @param string $userId
+	 * @return Vehicle[]
+	 */
+	public function findAll($userId) {
+		return $this->mapper->findAll($userId);
+	}
+
+	/**
+	 * 
+	 * @param string $name
+	 * @param string $userId
+	 * @return Vehicle
+	 */
 	public function create($name, $userId) {
 		$vehicle = new Vehicle();
 		$vehicle->setName($name);
@@ -52,6 +61,13 @@ class VehicleService {
 		return $this->mapper->insert($vehicle);
 	}
 
+	/**
+	 * 
+	 * @param int $id
+	 * @param string $name
+	 * @param string $userId
+	 * @return Vehicle
+	 */
 	public function update($id, $name, $userId) {
 		try {
 			$vehicle = $this->mapper->find($id, $userId);
@@ -62,6 +78,11 @@ class VehicleService {
 		}
 	}
 
+	/**
+	 * 
+	 * @param int $id
+	 * @param string $userId
+	 */
 	public function delete($id, $userId) {
 		try {
 			$vehicle = $this->mapper->find($id, $userId);

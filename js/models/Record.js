@@ -14,11 +14,13 @@ define(function (require) {
 	return Backbone.Model.extend({
 		defaults: {
 			id: null,
+			vehicleId: null,
 			date: null,
 			odometer: 0.0,
 			fuel: 0.0,
 			cost: 0.0,
-			full: true
+			full: true,
+			active: false
 		}
 	});
 });

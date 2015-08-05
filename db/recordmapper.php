@@ -13,39 +13,45 @@ namespace OCA\Fuel\Db;
  */
 use OCP\IDb;
 use OCP\AppFramework\Db\Mapper;
-use OCA\Fuel\Db\Vehicle;
+use OCA\Fuel\Db\Record;
 
-class VehicleMapper extends Mapper {
+class RecordMapper extends Mapper {
 
 	public function __construct(IDb $db) {
-		parent::__construct($db, 'fuel_vehicles', Vehicle::class);
+		parent::__construct($db, 'fuel_records', Record::class);
 	}
 
 	/**
 	 * 
 	 * @param int $id
+	 * @param int $vehicleId
 	 * @param string $userId
-	 * @return Vehicle
+	 * @return Record
 	 */
-	public function find($id, $userId) {
-		$sql = 'SELECT * FROM *PREFIX*fuel_vehicles'
+	public function find($id, $vehicleId, $userId) {
+		$sql = 'SELECT * FROM *PREFIX*fuel_records'
 			. ' WHERE id = ?'
+			. ' AND vehicle_id = ?'
 			. ' AND user_id = ?';
 		return $this->findEntity($sql, [
 				$id,
+				$vehicleId,
 				$userId,
 		]);
 	}
 
 	/**
 	 * 
+	 * @param int $vehicleId
 	 * @param string $userId
-	 * @return Vehicle[]
+	 * @return Record[]
 	 */
-	public function findAll($userId) {
-		$sql = 'SELECT * FROM *PREFIX*fuel_vehicles'
-			. ' WHERE user_id = ?';
+	public function findAll($vehicleId, $userId) {
+		$sql = 'SELECT * FROM *PREFIX*fuel_records'
+			. ' WHERE vehicle_id = ?'
+			. ' AND user_id = ?';
 		return $this->findEntities($sql, [
+				$vehicleId,
 				$userId,
 		]);
 	}
