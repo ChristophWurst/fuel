@@ -10,9 +10,22 @@
  */
 ?>
 <script id="vehicle-list-item-template" type="text/html">
-	<a href="#vehicle/<%= id %>"
-	   class="<%= active ? 'active' : ''%>">
+	<a href="#vehicle/<%= id %>">
 		<%= name %>
 	</a>
+	<div class="app-navigation-entry-utils">
+		<ul>
+			<li class="app-navigation-entry-utils-menu-button">
+				<button title="<?php p($l->t('Menu')); ?>"></button>
+			</li>
+		</ul>
+	</div>
+	<div class="app-navigation-entry-menu <%= menuOpened() %>">
+		<li>
+			<button class="icon-delete delete-vehicle" title="<?php p($l->t('Delete vehicle')); ?>">
+			</button>
+		</li>
+	</ul>
+</div>
 </script>
 

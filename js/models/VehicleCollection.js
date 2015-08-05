@@ -1,3 +1,5 @@
+/* global OC */
+
 /**
  * ownCloud - fuel
  *
@@ -15,7 +17,8 @@ define(function (require) {
 		Vehicle = require('models/Vehicle');
 
 	var VehicleCollection = Backbone.Collection.extend({
-		model: Vehicle
+		model: Vehicle,
+		url: OC.generateUrl('/apps/fuel/vehicles')
 	});
 
 	return VehicleCollection;

@@ -74,6 +74,7 @@ class VehicleController extends Controller {
 	}
 
 	/**
+	 * @NoAdminRequired
 	 * 
 	 * @param int $id
 	 * @return DataResponse

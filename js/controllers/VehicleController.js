@@ -49,7 +49,6 @@ define(function (require) {
 
 			// Sync data
 			records.url = app.baseUrl + 'vehicles/' + id + '/records';
-			;
 			records.fetch({
 				success: function (collection) {
 					// Update vehicle model to have newest data

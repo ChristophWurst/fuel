@@ -106,7 +106,6 @@ define(function (require) {
 			prefixedRoutes[app.baseUrl + route] = method;
 		}
 
-		app.vehicles.url = app.baseUrl + 'vehicles';
 		app.vehicles.fetch();
 
 		app.router = new FuelRouter();

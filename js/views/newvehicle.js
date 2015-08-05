@@ -16,7 +16,6 @@ define(function (require) {
 
 	return Marionette.ItemView.extend({
 		app: null,
-		tagname: 'ul',
 		template: '#new-vehicle-template',
 		templateHelpers: function () {
 			return {
