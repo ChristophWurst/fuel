@@ -11,5 +11,7 @@
  */
 
 define(function() {
+	'use strinct';
+
 	return OC;
 });

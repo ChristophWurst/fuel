@@ -10,6 +10,8 @@
  * @copyright Christoph Wurst 2015
  */
 
+'use strinct';
+
 requirejs.config({
 	baseUrl: '/apps/fuel/js',
 	paths: {

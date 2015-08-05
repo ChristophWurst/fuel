@@ -9,6 +9,8 @@
  */
 
 define(function (require) {
+	'use strinct';
+
 	var RecordView = require('views/record'),
 		Marionette = require('marionette');
 

@@ -9,6 +9,8 @@
  */
 
 define(function (require) {
+	'use strinct';
+
 	var VehicleView = require('views/vehicle'),
 		Marionette = require('marionette');
 

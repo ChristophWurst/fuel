@@ -9,6 +9,8 @@
  */
 
 define(function (require) {
+	'use strinct';
+
 	var Marionette = require('marionette'),
 		Backbone = require('backbone');
 

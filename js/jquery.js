@@ -10,6 +10,8 @@
 
 //TODO: find better way to reuse core jquery
 define(function () {
+	'use strinct';
+
 	return jQuery;
 });
 

@@ -9,6 +9,8 @@
  */
 
 define(function (require) {
+	'use strinct';
+
 	var Backbone = require('backbone');
 
 	return Backbone.Model.extend({
