@@ -17,25 +17,31 @@ define(function (require) {
 		Backbone = require('backbone'),
 		Marionette = require('marionette'),
 		_ = require('underscore'),
+		ApplicationState = require('models/ApplicationState'),
 		VehicleController = require('controllers/VehicleController'),
-		VehicleCollection = require('models/VehicleCollection'),
 		VehiclesView = require('views/vehicles'),
-		RecordsCollection = require('models/RecordCollection'),
 		RecordsView = require('views/records'),
-		NewVehicleView = require('views/newvehicle');
+		NewVehicleView = require('views/newvehicle'),
+		NewRecordView = require('views/newrecord');
 
 	var FuelApplication = Marionette.Application.extend({
 		baseUrl: OC.generateUrl('/apps/fuel/'),
-		vehicles: new VehicleCollection(),
-		records: new RecordsCollection(),
+		state: null,
 		initialize: function () {
+			this.state = new ApplicationState();
 			console.log('application initialized');
 		},
-		addVehicle: function(options) {
+		addVehicle: function (options) {
 			var defaults = {
-				success: function() {},
-				error: function() {},
-				complete: function() {},
+				success: function () {
+
+				},
+				error: function () {
+
+				},
+				complete: function () {
+
+				},
 				name: ''
 			};
 			options = _.defaults(options, defaults);
@@ -46,7 +52,7 @@ define(function (require) {
 				data: {
 					name: options.name
 				},
-				success: function(vehicle) {
+				success: function (vehicle) {
 					app.vehicles.add(vehicle);
 					options.success(vehicle);
 				},
@@ -69,6 +75,7 @@ define(function (require) {
 		vehiclesRegion: '#vehicle-list',
 		newVehicleRegion: '#new-vehicle',
 		recordsRegion: '#record-list',
+		newRecordRegion: '#new-record',
 		statisticsRegion: '#statistics'
 	});
 
@@ -80,13 +87,25 @@ define(function (require) {
 			app: app
 		});
 		var vehicleView = new VehiclesView({
-			collection: app.vehicles
+			collection: app.state.get('vehicles')
+		});
+		var newRecordView = new NewRecordView({
+			app: app
 		});
 		var recordsView = new RecordsView({
-			collection: app.records
+			collection: app.state.get('records')
 		});
 		app.newVehicleRegion.show(newVehicleView);
 		app.vehiclesRegion.show(vehicleView);
+		app.newRecordRegion.show(newRecordView);
+		app.recordsRegion.show(recordsView);
+	});
+
+	app.listenTo(app.state, 'change:records', function() {
+		app.recordsRegion.reset();
+		var recordsView = new RecordsView({
+			collection: app.state.get('records')
+		});
 		app.recordsRegion.show(recordsView);
 	});
 
@@ -106,7 +125,7 @@ define(function (require) {
 			prefixedRoutes[app.baseUrl + route] = method;
 		}
 
-		app.vehicles.fetch();
+		app.state.get('vehicles').fetch();
 
 		app.router = new FuelRouter();
 		app.router.processAppRoutes(VehicleController, vehicleRoutes);

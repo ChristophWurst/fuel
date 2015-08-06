@@ -29,32 +29,25 @@ define(function (require) {
 			/**
 			 * @todo do this before any request
 			 */
-			app.vehicles.forEach(function (vehicle) {
+			app.state.get('vehicles').forEach(function (vehicle) {
 				vehicle.set('active', false);
 			});
 
-			var activeVehicle = app.vehicles.get(id);
+			var activeVehicle = app.state.get('vehicles').get(id);
 			activeVehicle.set('active', true);
 
 			// Show cached records until real data arrived from the
 			// server if available
 			var records = activeVehicle.get('records');
-			if (records) {
-				app.records.reset(records.toJSON());
-			} else {
-				// Empty records list
-				app.records.reset();
-				records = new RecordsCollection();
-			}
+			app.state.set('records', records);
 
 			// Sync data
-			records.url = app.baseUrl + 'vehicles/' + id + '/records';
 			records.fetch({
 				success: function (collection) {
 					// Update vehicle model to have newest data
 					activeVehicle.set('records', collection);
 					// Update record list
-					app.records.reset(collection.toJSON());
+					app.state.set('records', collection);
 				},
 				error: function () {
 					OC.Notification.showTemporary(t('fuel', 'Could not load record data'));

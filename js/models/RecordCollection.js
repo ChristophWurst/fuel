@@ -1,3 +1,5 @@
+/* global OC */
+
 /**
  * ownCloud - fuel
  *
@@ -15,6 +17,27 @@ define(function (require) {
 		Record = require('models/Record');
 
 	return Backbone.Collection.extend({
-		model: Record
+		model: Record,
+		vehicleId: null,
+		url: null,
+		events: {
+			'change': 'change'
+		},
+		initialize: function (data, options) {
+			options = options || {};
+			this.vehicleId = options.vehicleId;
+			if (this.vehicleId) {
+				this.url = OC.generateUrl('/apps/fuel/vehicles/{vehicleId}/records', {
+					vehicleId: this.vehicleId
+				});
+			}
+		},
+		change: function () {
+			if (this.vehicleId) {
+				this.url = OC.generateUrl('/apps/fuel/vehicles/{vehicleId}/records', {
+					vehicleId: this.vehicleId
+				});
+			}
+		}
 	});
 });

@@ -23,10 +23,11 @@ style('fuel', 'style');
 
 	<div id="app-content">
 		<div id="app-content-wrapper">
-			<div id="record-list">
+			<div id="records">
+				<div id="new-record"></div>
+				<div id="record-list"></div>
 			</div>
-			<div id="statistics">
-			</div>
+			<div id="statistics"></div>
 		</div>
 	</div>
 </div>
@@ -37,4 +38,5 @@ style('fuel', 'style');
  */
 print_unescaped($this->inc('part.new-vehicle'));
 print_unescaped($this->inc('part.vehicle-list-item'));
+print_unescaped($this->inc('part.new-record'));
 print_unescaped($this->inc('part.record-list-item'));

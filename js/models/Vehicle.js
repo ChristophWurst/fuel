@@ -11,7 +11,8 @@
 define(function (require) {
 	'use strinct';
 
-	var Backbone = require('backbone');
+	var Backbone = require('backbone'),
+		RecordCollection = require('models/RecordCollection');
 
 	return Backbone.Model.extend({
 		defaults: {
@@ -19,6 +20,12 @@ define(function (require) {
 			name: '',
 			records: null,
 			active: false
+		},
+		initialize: function() {
+			var records = new RecordCollection(null, {
+				vehicleId: this.id
+			});
+			this.set('records', records);
 		}
 	});
 });

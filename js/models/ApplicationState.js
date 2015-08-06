@@ -9,18 +9,16 @@
  */
 
 define(function (require) {
-	'use strinct';
+	'use strict';
 
-	var Backbone = require('backbone');
+	var Backbone = require('backbone'),
+		VehicleCollection = require('models/VehicleCollection'),
+		RecordCollection = require('models/RecordCollection');
 
 	return Backbone.Model.extend({
 		defaults: {
-			id: null,
-			vehicleId: null,
-			date: null,
-			odo: 0.0,
-			fuel: 0.0,
-			active: false
+			vehicles: new VehicleCollection(),
+			records: new RecordCollection()
 		}
 	});
 });

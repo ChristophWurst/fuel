@@ -18,14 +18,36 @@
 	
 }
 
-#record-list, #statistics {
+#records, #statistics {
 	position: relative;
 	float: left;
 }
 
-#record-list {
+#records {
 	width: 30%;
 }
+#new-record, #record-list {
+	position: relative;
+	width: 100%;
+}
+#new-record {
+	overflow: hidden;
+}
+#new-record:after {
+	clear: both;
+}
+
+.new-record-input {
+	position: relative;
+	width: 50%;
+	padding: 7px;
+	float: left;
+}
+.new-record-input input {
+	position: relative;
+	width: 100%;
+}
+
 .record-container {
 	position: relative;
 	width: 100%;
@@ -46,7 +68,7 @@
 }
 
 #statistics {
-	widt: 70%;
+	width: 70%;
 }
 
 .hidden {
