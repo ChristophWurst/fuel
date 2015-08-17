@@ -1,3 +1,5 @@
+/* global Infinity */
+
 /**
  * ownCloud - fuel
  *
@@ -20,7 +22,29 @@ define(function (require) {
 			date: null,
 			odo: 0.0,
 			fuel: 0.0,
+			distance: 0.0,
+			consumption: Infinity,
+			predecessor: null,
 			active: false
+		},
+		initialize: function() {
+			this.on('change:predecessor', function(record) {
+				record.set('distance', this.getDistance());
+			});
+			this.on('change:distance', function(record) {
+				record.set('consumption', this.getConsumption());
+			});
+		},
+		getDistance: function () {
+			var predecessor = this.get('predecessor');
+			if (predecessor) {
+				return this.get('odo') - predecessor.get('odo');
+			}
+			return Infinity;
+		},
+		getConsumption: function() {
+			var consumption = this.get('fuel') / this.getDistance();
+			return consumption.toFixed(2);
 		}
 	});
 });

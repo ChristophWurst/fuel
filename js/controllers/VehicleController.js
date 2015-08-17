@@ -13,8 +13,6 @@
 define(function (require) {
 	'use strinct';
 
-	var RecordsCollection = require('models/RecordCollection');
-
 	return {
 		index: function () {
 			/**
@@ -44,8 +42,6 @@ define(function (require) {
 			// Sync data
 			records.fetch({
 				success: function (collection) {
-					// Update vehicle model to have newest data
-					activeVehicle.set('records', collection);
 					// Update record list
 					app.state.set('records', collection);
 				},

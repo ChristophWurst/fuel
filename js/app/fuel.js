@@ -53,7 +53,7 @@ define(function (require) {
 					name: options.name
 				},
 				success: function (vehicle) {
-					app.vehicles.add(vehicle);
+					app.state.get('vehicles').add(vehicle);
 					options.success(vehicle);
 				},
 				error: options.error,
@@ -101,10 +101,14 @@ define(function (require) {
 		app.recordsRegion.show(recordsView);
 	});
 
-	app.listenTo(app.state, 'change:records', function() {
+	app.listenTo(app.state, 'change:records', function(state, records) {
+		// Update statistics
+		state.get('statistics').refresh(records);
+
+		// Update records list view
 		app.recordsRegion.reset();
 		var recordsView = new RecordsView({
-			collection: app.state.get('records')
+			collection: records
 		});
 		app.recordsRegion.show(recordsView);
 	});

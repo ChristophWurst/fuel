@@ -13,12 +13,14 @@ define(function (require) {
 
 	var Backbone = require('backbone'),
 		VehicleCollection = require('models/VehicleCollection'),
-		RecordCollection = require('models/RecordCollection');
+		RecordCollection = require('models/RecordCollection'),
+		Statistics = require('models/recordstatistics');
 
 	return Backbone.Model.extend({
 		defaults: {
 			vehicles: new VehicleCollection(),
-			records: new RecordCollection()
+			records: new RecordCollection(),
+			statistics: new Statistics()
 		}
 	});
 });

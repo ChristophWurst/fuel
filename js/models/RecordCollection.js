@@ -18,11 +18,13 @@ define(function (require) {
 
 	return Backbone.Collection.extend({
 		model: Record,
+		comparator: function (r1, r2) {
+			var d1 = new Date(r1.get('date'));
+			var d2 = new Date(r2.get('date'));
+			return d1 < d2;
+		},
 		vehicleId: null,
 		url: null,
-		events: {
-			'change': 'change'
-		},
 		initialize: function (data, options) {
 			options = options || {};
 			this.vehicleId = options.vehicleId;
@@ -31,13 +33,17 @@ define(function (require) {
 					vehicleId: this.vehicleId
 				});
 			}
+			this.on('add', this.change); //TODO: trigger only once per change
 		},
 		change: function () {
-			if (this.vehicleId) {
-				this.url = OC.generateUrl('/apps/fuel/vehicles/{vehicleId}/records', {
-					vehicleId: this.vehicleId
-				});
-			}
+			// Set predecessors
+			var prev = null;
+			this.forEach(function (record) {
+				if (prev) {
+					prev.set('predecessor', record);
+				}
+				prev = record;
+			});
 		}
 	});
 });

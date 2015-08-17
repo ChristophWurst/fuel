@@ -8,7 +8,7 @@
  * @copyright Christoph Wurst 2015
  */
 
-define(function () {
+define(function (require) {
 	'use strinct';
 
 	var Marionette = require('marionette');
@@ -16,6 +16,11 @@ define(function () {
 	return Marionette.ItemView.extend({
 		tagName: 'li',
 		template: '#record-list-item-template',
+		templateHelpers: {
+			addSign: function(value) {
+				return value > 0 ? '+' + value : value;
+			}
+		},
 		initialize: function () {
 			this.listenTo(this.model, 'change', this.render);
 		}

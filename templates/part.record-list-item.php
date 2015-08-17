@@ -24,10 +24,10 @@
 				<%= fuel %>l
 			</div>
 			<div class="record-distance">
-				+<%= 140 %>km
+				<%= addSign(distance) %>km
 			</div>
 			<div class="record-consumption">
-				<%= 5.8 %>l/100km
+				<%= consumption %>l/100km
 			</div>
 		</div>
 	</a>
