@@ -22,7 +22,8 @@ define(function (require) {
 		VehiclesView = require('views/vehicles'),
 		RecordsView = require('views/records'),
 		NewVehicleView = require('views/newvehicle'),
-		NewRecordView = require('views/newrecord');
+		NewRecordView = require('views/newrecord'),
+		StatisticsView = require('views/statistics');
 
 	var FuelApplication = Marionette.Application.extend({
 		baseUrl: OC.generateUrl('/apps/fuel/'),
@@ -95,13 +96,17 @@ define(function (require) {
 		var recordsView = new RecordsView({
 			collection: app.state.get('records')
 		});
+		var statisticsView = new StatisticsView({
+			model: app.state.get('statistics')
+		});
 		app.newVehicleRegion.show(newVehicleView);
 		app.vehiclesRegion.show(vehicleView);
 		app.newRecordRegion.show(newRecordView);
 		app.recordsRegion.show(recordsView);
+		app.statisticsRegion.show(statisticsView);
 	});
 
-	app.listenTo(app.state, 'change:records', function(state, records) {
+	app.listenTo(app.state, 'change:records', function (state, records) {
 		// Update statistics
 		state.get('statistics').refresh(records);
 

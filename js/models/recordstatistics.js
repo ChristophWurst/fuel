@@ -1,3 +1,5 @@
+/* global Infinity */
+
 /**
  * ownCloud - fuel
  *
@@ -14,18 +16,32 @@ define(function (require) {
 	return Backbone.Model.extend({
 		defaults: {
 			app: null,
-			average: null
+			averageConsumption: null,
+			averagePrice: null
 		},
 		refresh: function (records) {
-			console.info('avg: ' + this.getAverage(records));
+			this.set('averageConsumption', this.getAverageConsumption(records));
+			this.set('averagePrice', this.getAveragePrice(records));
 		},
-		getAverage: function (records) {
+		getAverageConsumption: function (records) {
 			var count = 0;
 			var sum = 0;
 			records.each(function (record) {
-				console.log(record.distance);
+				var consumption = Number(record.get('consumption'));
+				if (consumption !== Infinity) {
+					count++;
+					sum += consumption;
+				}
+			});
+			return sum / count;
+		},
+		getAveragePrice: function (records) {
+			var count = 0;
+			var sum = 0;
+			records.each(function (record) {
+				var price = Number(record.get('price'));
 				count++;
-				sum += record.distance;
+				sum += price;
 			});
 			return sum / count;
 		}
