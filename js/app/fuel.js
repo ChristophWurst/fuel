@@ -13,26 +13,55 @@
 define(function (require) {
 	'use strict';
 
+	/**
+	 * Libraries
+	 */
 	var $ = require('jquery'),
 		Backbone = require('backbone'),
 		Marionette = require('marionette'),
-		_ = require('underscore'),
-		ApplicationState = require('models/ApplicationState'),
-		VehicleController = require('controllers/VehicleController'),
-		VehiclesView = require('views/vehicles'),
-		RecordsView = require('views/records'),
-		NewVehicleView = require('views/newvehicle'),
+		_ = require('underscore');
+
+	/**
+	 * Views
+	 */
+	var NewVehicleView = require('views/newvehicle'),
 		NewRecordView = require('views/newrecord'),
 		StatisticsView = require('views/statistics');
+
+	/**
+	 * Controller
+	 */
+	var VehicleController = require('controllers/vehiclecontroller'),
+		RecordController = require('controllers/recordcontroller');
+
+	/**
+	 * Services
+	 */
+	var VehicleService = require('service/vehicle'),
+		RecordService = require('service/record');
+
+	var ApplicationState = require('models/ApplicationState');
 
 	var FuelApplication = Marionette.Application.extend({
 		baseUrl: OC.generateUrl('/apps/fuel/'),
 		state: null,
+		VehicleController: VehicleController,
+		RecordController: RecordController,
 		initialize: function () {
 			this.state = new ApplicationState();
 			console.log('application initialized');
 		},
+		navigate: function (route, options) {
+			options = options || {};
+			Backbone.history.navigate(route, options);
+		},
+		getCurrentRoute: function () {
+			return Backbone.history.fragment;
+		},
 		addVehicle: function (options) {
+			/**
+			 * TODO: use Backbone sync instead of manual request
+			 */
 			var defaults = {
 				success: function () {
 
@@ -63,10 +92,6 @@ define(function (require) {
 		}
 	});
 
-	var FuelRouter = Marionette.AppRouter.extend({
-		controller: VehicleController
-	});
-
 	var app = new FuelApplication();
 
 	/**
@@ -87,62 +112,74 @@ define(function (require) {
 		var newVehicleView = new NewVehicleView({
 			app: app
 		});
-		var vehicleView = new VehiclesView({
-			collection: app.state.get('vehicles')
-		});
 		var newRecordView = new NewRecordView({
 			app: app
-		});
-		var recordsView = new RecordsView({
-			collection: app.state.get('records')
 		});
 		var statisticsView = new StatisticsView({
 			model: app.state.get('statistics')
 		});
 		app.newVehicleRegion.show(newVehicleView);
-		app.vehiclesRegion.show(vehicleView);
 		app.newRecordRegion.show(newRecordView);
-		app.recordsRegion.show(recordsView);
 		app.statisticsRegion.show(statisticsView);
 	});
 
-	app.listenTo(app.state, 'change:records', function (state, records) {
-		// Update statistics
-		state.get('statistics').refresh(records);
+	/**
+	 * Set up request handler
+	 */
+	app.reqres.setHandler('vehicle:entities', function () {
+		return VehicleService.getVehicleEntities();
+	});
+	app.reqres.setHandler('record:entities', function (vehicleId) {
+		return RecordService.getRecordEntities(vehicleId);
+	});
 
-		// Update records list view
-		app.recordsRegion.reset();
-		var recordsView = new RecordsView({
-			collection: records
-		});
-		app.recordsRegion.show(recordsView);
+	/**
+	 * Set up routing
+	 */
+	app.Router = Marionette.AppRouter.extend({
+		appRoutes: {
+			'vehicles': 'listVehicles',
+			'vehicles/:vehicleId/records': 'listRecords'
+		}
+	});
+
+	var API = {
+		listVehicles: function () {
+			app.VehicleController.listVehicles();
+		},
+		listRecords: function (vehicleId) {
+			app.RecordController.listRecords(vehicleId);
+		}
+	};
+
+	app.on('vehicles:list', function () {
+		app.navigate('vehicles');
+		API.listVehicles();
+	});
+
+	app.on('records:list', function (vehicleId) {
+		app.navigate('vehicles/' + vehicleId + '/records');
+		API.listRecords(vehicleId);
 	});
 
 	app.on('start', function () {
 		// Start history once our application is ready
 		Backbone.history.start();
 
-		var vehicleRoutes = {
-			'': 'index',
-			'vehicle/:id': 'vehicle'
-		};
-
-		// Prefix URLs
-		var prefixedRoutes = {};
-		for (var route in vehicleRoutes) {
-			var method = vehicleRoutes[route];
-			prefixedRoutes[app.baseUrl + route] = method;
+		if (this.getCurrentRoute() === '') {
+			app.trigger('vehicles:list');
 		}
 
-		app.state.get('vehicles').fetch();
-
-		app.router = new FuelRouter();
-		app.router.processAppRoutes(VehicleController, vehicleRoutes);
+		app.Router = new app.Router({
+			controller: API
+		});
 	});
 
-	$(document).ready(function () {
+	// Hack to return app before it is started
+	// -> resolves cyclic dependency issues
+	setTimeout(function () {
 		app.start();
-	});
+	}, 0);
 
 	return app;
 });

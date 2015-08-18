@@ -11,14 +11,10 @@
 define(function (require) {
 	'use strict';
 
-	var Backbone = require('backbone'),
-		RecordCollection = require('models/RecordCollection'),
-		Statistics = require('models/recordstatistics');
+	var Marionette = require('marionette');
 
-	return Backbone.Model.extend({
-		defaults: {
-			records: new RecordCollection(),
-			statistics: new Statistics()
-		}
+	return Marionette.ItemView.extend({
+		template: false,
+		className: 'loading loading-view'
 	});
 });

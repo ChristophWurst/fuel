@@ -11,8 +11,7 @@
 define(function (require) {
 	'use strinct';
 
-	var Marionette = require('marionette'),
-		Backbone = require('backbone');
+	var Marionette = require('marionette');
 
 	return Marionette.ItemView.extend({
 		state: null,
@@ -34,6 +33,7 @@ define(function (require) {
 			};
 		},
 		events: {
+			'click': 'onClick',
 			'click .app-navigation-entry-utils-menu-button': 'toggleMenu',
 			'click .delete-vehicle': 'onDelete'
 		},
@@ -45,8 +45,14 @@ define(function (require) {
 			this.menuOpened = !this.menuOpened;
 			this.render();
 		},
-		onDelete: function() {
-			this.model.destroy();
+		onClick: function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			this.trigger('records:list', this.model);
+		},
+		onDelete: function(e) {
+			e.stopPropagation();
+			this.trigger('vehicle:delete', this.model);
 		}
 	});
 });
