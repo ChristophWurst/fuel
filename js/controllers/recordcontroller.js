@@ -9,37 +9,35 @@
  */
 
 define(function (require) {
-	'use strict';
+    'use strict';
 
-	var $ = require('jquery'),
-		RecordsView = require('views/records'),
-		LoadingView = require('views/loading');
+    var $ = require('jquery'),
+            RecordColumn = require('views/recordcolumn'),
+            LoadingView = require('views/loading');
 
-	function listRecords(vehicleId) {
-		var fetchingRecords = require('app').request('record:entities', vehicleId);
+    function listRecords(vehicleId) {
+        var fetchingRecords = require('app').request('record:entities', vehicleId);
 
-		// Show loading spinner
-		var loadingView = new LoadingView();
-		require('app').recordsRegion.show(loadingView);
+        // Show loading spinner
+        var loadingView = new LoadingView();
+        require('app').recordsRegion.show(loadingView);
 
-		$.when(fetchingRecords).done(function (records) {
-			setTimeout(function () {
-				var recordsView = new RecordsView({
-					collection: records
-				});
+        $.when(fetchingRecords).done(function (records) {
+            var recordsView = new RecordColumn({
+                collection: records
+            });
 
-				recordsView.on('childview:record:show', function (childView, model) {
-					require('app').trigger('record:show', vehicleId, model.get('id'));
-				});
+            recordsView.on('childview:record:show', function (childView, model) {
+                require('app').trigger('record:show', vehicleId, model.get('id'));
+            });
 
-				require('app').recordsRegion.show(recordsView);
-				// Update statistics
-				require('app').state.get('statistics').refresh(records);
-			}, 1000);
-		});
-	}
+            require('app').recordsRegion.show(recordsView);
+            // Update statistics
+            require('app').state.get('statistics').refresh(records);
+        });
+    }
 
-	return {
-		listRecords: listRecords
-	};
+    return {
+        listRecords: listRecords
+    };
 });

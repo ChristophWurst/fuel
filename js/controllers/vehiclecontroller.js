@@ -11,34 +11,37 @@
  */
 
 define(function (require) {
-	'use strinct';
+    'use strinct';
 
-	var $ = require('jquery'),
-		VehiclesView = require('views/vehiclelist');
+    var $ = require('jquery'),
+            VehiclesView = require('views/vehiclelist'),
+            LoadingView = require('views/loading');
 
-	function listVehicles() {
-		var fetchingVehicles = require('app').request('vehicle:entities');
+    function listVehicles() {
+        var fetchingVehicles = require('app').request('vehicle:entities');
 
-		$.when(fetchingVehicles).done(function (vehicles) {
-			setTimeout(function () {
-				var vehiclesView = new VehiclesView({
-					collection: vehicles
-				});
+        // Show loading spinner
+        var loadingView = new LoadingView();
+        require('app').vehiclesRegion.show(loadingView);
 
-				vehiclesView.on('childview:records:list', function (childView, model) {
-					require('app').trigger('records:list', model.get('id'));
-				});
+        $.when(fetchingVehicles).done(function (vehicles) {
+            var vehiclesView = new VehiclesView({
+                collection: vehicles
+            });
 
-				vehiclesView.on('childview:vehicle:delete', function (childView, model) {
-					model.destroy();
-				});
+            vehiclesView.on('childview:records:list', function (childView, model) {
+                require('app').trigger('records:list', model.get('id'));
+            });
 
-				require('app').vehiclesRegion.show(vehiclesView);
-			}, 1000);
-		});
-	}
+            vehiclesView.on('childview:vehicle:delete', function (childView, model) {
+                model.destroy();
+            });
 
-	return {
-		listVehicles: listVehicles
-	};
+            require('app').vehiclesRegion.show(vehiclesView);
+        });
+    }
+
+    return {
+        listVehicles: listVehicles
+    };
 });
