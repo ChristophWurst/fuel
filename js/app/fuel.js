@@ -157,16 +157,16 @@ define(function (require) {
     });
 
     app.on('start', function () {
+        new app.Router({
+            controller: API
+        });
+
         // Start history once our application is ready
         Backbone.history.start();
 
         if (this.getCurrentRoute() === '') {
             app.trigger('vehicles:list');
         }
-
-        app.Router = new app.Router({
-            controller: API
-        });
     });
 
     // Hack to return app before it is started
