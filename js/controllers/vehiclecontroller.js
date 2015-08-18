@@ -14,25 +14,27 @@ define(function (require) {
 	'use strinct';
 
 	var $ = require('jquery'),
-		VehiclesView = require('views/vehicles');
+		VehiclesView = require('views/vehiclelist');
 
 	function listVehicles() {
 		var fetchingVehicles = require('app').request('vehicle:entities');
 
 		$.when(fetchingVehicles).done(function (vehicles) {
-			var vehiclesView = new VehiclesView({
-				collection: vehicles
-			});
+			setTimeout(function () {
+				var vehiclesView = new VehiclesView({
+					collection: vehicles
+				});
 
-			vehiclesView.on('childview:records:list', function (childView, model) {
-				require('app').trigger('records:list', model.get('id'));
-			});
+				vehiclesView.on('childview:records:list', function (childView, model) {
+					require('app').trigger('records:list', model.get('id'));
+				});
 
-			vehiclesView.on('childview:vehicle:delete', function (childView, model) {
-				model.destroy();
-			});
+				vehiclesView.on('childview:vehicle:delete', function (childView, model) {
+					model.destroy();
+				});
 
-			require('app').vehiclesRegion.show(vehiclesView);
+				require('app').vehiclesRegion.show(vehiclesView);
+			}, 1000);
 		});
 	}
 

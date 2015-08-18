@@ -41,7 +41,8 @@ define(function (require) {
 			this.listenTo(this.model, 'change', this.render);
 			
 		},
-		toggleMenu: function() {
+		toggleMenu: function(e) {
+			e.stopPropagation();
 			this.menuOpened = !this.menuOpened;
 			this.render();
 		},

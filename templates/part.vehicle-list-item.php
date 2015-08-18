@@ -21,11 +21,12 @@
 		</ul>
 	</div>
 	<div class="app-navigation-entry-menu <%= menuOpened() %>">
-		<li>
-			<button class="icon-delete delete-vehicle" title="<?php p($l->t('Delete vehicle')); ?>">
-			</button>
-		</li>
-	</ul>
-</div>
+		<ul>	
+			<li>
+				<button class="icon-delete delete-vehicle" title="<?php p($l->t('Delete vehicle')); ?>">
+				</button>
+			</li>
+		</ul>
+	</div>
 </script>
 
