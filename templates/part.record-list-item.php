@@ -11,7 +11,7 @@
 ?>
 
 <script id="record-list-item-template" type="text/html">
-	<a href="#vehicle/<%= vehicleId %>/record/<%= id %>"
+	<a href="#vehicles/<%= vehicleId %>/records/<%= id %>"
 	   class="<%= active ? 'active' : ''%>">
 		<div class="record-container">
 			<div class="record-date">

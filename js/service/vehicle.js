@@ -9,21 +9,35 @@
  */
 
 define(function (require) {
-	var $ = require('jquery'),
-		VehicleCollection = require('models/VehicleCollection');
+    var $ = require('jquery'),
+            VehicleCollection = require('models/VehicleCollection'),
+            vehicles = new VehicleCollection();
 
-	function getVehicleEntities() {
-		var vehicles = new VehicleCollection();
-		var defer = $.Deferred();
-		vehicles.fetch({
-			success: function (data) {
-				defer.resolve(data);
-			}
-		});
-		return defer.promise();
-	}
+    function getVehicleEntities() {
+        var defer = $.Deferred();
 
-	return {
-		getVehicleEntities: getVehicleEntities
-	};
+        vehicles.fetch({
+            success: function (data) {
+                defer.resolve(data);
+            }
+        });
+
+        return defer.promise();
+    }
+
+    function getVehicleEntity(vehicleId) {
+        var defer = $.Deferred();
+
+        $.when(getVehicleEntities()).done(function (vehicles) {
+            var vehicle = vehicles.get(vehicleId);
+            defer.resolve(vehicle);
+        });
+
+        return defer.promise();
+    }
+
+    return {
+        getVehicleEntities: getVehicleEntities,
+        getVehicleEntity: getVehicleEntity
+    };
 });

@@ -25,13 +25,13 @@ define(function (require) {
 		},
 		submit: function (e) {
 			e.preventDefault();
-			var record = new Record({
+			var data = {
 				odo: this.$('input[name=odo]').val(),
 				date: this.$('input[name=date]').val(),
 				fuel: this.$('input[name=fuel]').val(),
 				price: this.$('input[name=price]').val()
-			});
-			this.app.state.get('records').create(record);
+			};
+            this.trigger('form:submit', data);
 		}
 	});
 });

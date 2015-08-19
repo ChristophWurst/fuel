@@ -9,23 +9,23 @@
  */
 
 define(function (require) {
-	'use strinct';
+    'use strinct';
 
-	var Backbone = require('backbone'),
-		RecordCollection = require('models/RecordCollection');
+    var Backbone = require('backbone'),
+            RecordCollection = require('models/RecordCollection');
 
-	return Backbone.Model.extend({
-		defaults: {
-			id: null,
-			name: '',
-			records: null,
-			active: false
-		},
-		initialize: function() {
-			var records = new RecordCollection(null, {
-				vehicleId: this.id
-			});
-			this.set('records', records);
-		}
-	});
+    return Backbone.Model.extend({
+        defaults: {
+            id: null,
+            name: '',
+            records: null,
+            active: false
+        },
+        initialize: function () {
+            var records = new RecordCollection(null, {
+                vehicleId: this.id
+            });
+            this.set('records', records);
+        }
+    });
 });

@@ -81,7 +81,8 @@ define(function (require) {
                     name: options.name
                 },
                 success: function (vehicle) {
-                    app.state.get('vehicles').add(vehicle);
+                    //TODO: fix
+                    console.log(vehicle);
                     options.success(vehicle);
                 },
                 error: options.error,
@@ -133,16 +134,53 @@ define(function (require) {
     app.Router = Marionette.AppRouter.extend({
         appRoutes: {
             'vehicles': 'listVehicles',
-            'vehicles/:vehicleId/records': 'listRecords'
+            'vehicles/:vehicleId': 'showVehicle',
+            'vehicles/:vehicleId/records': 'listRecords',
+            'vehicles/:vehicleId/records/:recordId': 'showRecord'
         }
     });
 
     var API = {
         listVehicles: function () {
-            app.VehicleController.listVehicles();
+            return app.VehicleController.listVehicles();
+        },
+        showVehicle: function (vehicleId) {
+            // Show record list instead
+            app.trigger('records:list', vehicleId);
         },
         listRecords: function (vehicleId) {
-            app.RecordController.listRecords(vehicleId);
+            return app.RecordController.listRecords(vehicleId);
+        },
+        showRecord: function (vehicleId, recordId) {
+            //TODO: implement show
+            return this.listRecords(vehicleId);
+        }
+    };
+
+    var RoutingController = {
+        listVehicles: function () {
+            API.listVehicles();
+        },
+        showVehicle: function (vehicleId) {
+            vehicleId = Number(vehicleId);
+            API.showVehicle(vehicleId);
+        },
+        listRecords: function (vehicleId) {
+            vehicleId = Number(vehicleId);
+            $.when(API.listVehicles()).done(function () {
+                app.trigger('vehicle:show', vehicleId);
+                API.listRecords(vehicleId);
+            });
+        },
+        showRecord: function (vehicleId, recordId) {
+            vehicleId = Number(vehicleId);
+            recordId = Number(recordId);
+            $.when(API.listVehicles()).done(function () {
+                app.trigger('vehicle:show', vehicleId);
+                $.when(API.listRecords(vehicleId)).done(function () {
+                    //TODO: show avtive record
+                });
+            });
         }
     };
 
@@ -151,14 +189,24 @@ define(function (require) {
         API.listVehicles();
     });
 
+    app.on('vehicle:show', function (vehicleId) {
+        app.navigate('vehicles/' + vehicleId);
+        API.showVehicle(vehicleId);
+    });
+
     app.on('records:list', function (vehicleId) {
         app.navigate('vehicles/' + vehicleId + '/records');
         API.listRecords(vehicleId);
     });
 
+    app.on('record:show', function (vehicleId, recordId) {
+        app.navigate('vehicles/' + vehicleId + '/records/' + recordId);
+        // TODO:
+    });
+
     app.on('start', function () {
         new app.Router({
-            controller: API
+            controller: RoutingController
         });
 
         // Start history once our application is ready

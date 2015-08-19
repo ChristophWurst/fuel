@@ -10,11 +10,10 @@
 
 define(function (require) {
     'use strict';
-
+    
     var Marionette = require('marionette'),
             NewRecordView = require('views/newrecord'),
             RecordListView = require('views/recordlist');
-
     return Marionette.LayoutView.extend({
         template: '#record-list-template',
         regions: {
@@ -27,7 +26,6 @@ define(function (require) {
         onShow: function () {
             var newRecordView = new NewRecordView();
             this.newRecord.show(newRecordView);
-
             var recordList = new RecordListView({
                 collection: this.collection
             });

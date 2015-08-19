@@ -12,6 +12,7 @@ define(function (require) {
     'use strict';
 
     var $ = require('jquery'),
+            Record = require('models/Record'),
             RecordColumn = require('views/recordcolumn'),
             LoadingView = require('views/loading');
 
@@ -32,6 +33,13 @@ define(function (require) {
             });
 
             require('app').recordsRegion.show(recordsView);
+
+            var newRecordView = recordsView.newRecord.currentView;
+            newRecordView.on('form:submit', function (data) {
+                var record = new Record(data);
+                records.create(record);
+            });
+
             // Update statistics
             require('app').state.get('statistics').refresh(records);
         });

@@ -10,7 +10,7 @@
  */
 ?>
 <script id="vehicle-list-item-template" type="text/html">
-	<a href="#vehicles/<%= id %>/records">
+	<a href="#vehicles/<%= id %>">
 		<%= name %>
 	</a>
 	<div class="app-navigation-entry-utils">

@@ -18,6 +18,7 @@ define(function (require) {
             LoadingView = require('views/loading');
 
     function listVehicles() {
+        var defer = $.Deferred();
         var fetchingVehicles = require('app').request('vehicle:entities');
 
         // Show loading spinner
@@ -38,7 +39,10 @@ define(function (require) {
             });
 
             require('app').vehiclesRegion.show(vehiclesView);
+            defer.resolve();
         });
+
+        return defer.promise();
     }
 
     return {

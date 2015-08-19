@@ -21,8 +21,16 @@ define(function (require) {
 				return value > 0 ? '+' + value : value;
 			}
 		},
+        events: {
+            'click': 'onClick'
+        },
 		initialize: function () {
 			this.listenTo(this.model, 'change', this.render);
-		}
+		},
+        onClick: function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            require('app').trigger('record:show', this.model.get('vehicleId'), this.model.get('id'));
+        }
 	});
 });

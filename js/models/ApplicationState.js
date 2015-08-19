@@ -12,12 +12,10 @@ define(function (require) {
 	'use strict';
 
 	var Backbone = require('backbone'),
-		RecordCollection = require('models/RecordCollection'),
 		Statistics = require('models/recordstatistics');
 
 	return Backbone.Model.extend({
 		defaults: {
-			records: new RecordCollection(),
 			statistics: new Statistics()
 		}
 	});
