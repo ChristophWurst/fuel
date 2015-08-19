@@ -16,7 +16,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 use OCA\Fuel\Service\VehicleService;
 
-class VehicleController extends Controller {
+class VehiclesController extends Controller {
 
 	use Errors;
 

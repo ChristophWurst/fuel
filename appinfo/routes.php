@@ -19,12 +19,21 @@
  */
 return [
 	'resources' => [
-		'vehicle' => [
+		'vehicles' => [
 			'url' => '/vehicles',
 		],
 		'records' => [
 			'url' => '/vehicles/{vehicleId}/records'
-		]
+		],
+		/**
+		 * REST API v0.1
+		 */
+		'vehicles_api' => [
+			'url' => '/api/0.1/vehicles'
+		],
+		'records_api' => [
+			'url' => '/api/0.1/records'
+		],
 	],
 	'routes' => [
 		[
