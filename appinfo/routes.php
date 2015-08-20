@@ -41,5 +41,10 @@ return [
 			'url' => '/',
 			'verb' => 'GET'
 		],
+		[
+			'name' => 'vehicles#importCsv',
+			'url' => '/vehicles/import-csv',
+			'verb' => 'POST'
+		],
 	]
 ];

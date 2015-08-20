@@ -25,7 +25,8 @@ define(function (require) {
      * Views
      */
     var NewVehicleView = require('views/newvehicle'),
-            StatisticsView = require('views/statistics');
+            StatisticsView = require('views/statistics'),
+            ImportVehicleView = require('views/vehicleimport');
 
     /**
      * Controller
@@ -100,8 +101,8 @@ define(function (require) {
         vehiclesRegion: '#vehicle-list',
         newVehicleRegion: '#new-vehicle',
         recordsRegion: '#records',
-        newRecordRegion: '#new-record',
-        statisticsRegion: '#statistics'
+        statisticsRegion: '#statistics',
+        importVehicleRegion: '#import-vehicle'
     });
 
     /**
@@ -114,8 +115,10 @@ define(function (require) {
         var statisticsView = new StatisticsView({
             model: app.state.get('statistics')
         });
+        var importView = new ImportVehicleView();
         app.newVehicleRegion.show(newVehicleView);
         app.statisticsRegion.show(statisticsView);
+        app.importVehicleRegion.show(importView);
     });
 
     /**
@@ -147,6 +150,9 @@ define(function (require) {
         showVehicle: function (vehicleId) {
             // Show record list instead
             app.trigger('records:list', vehicleId);
+        },
+        importVehicle: function (file) {
+            app.VehicleController.importVehicle(file);
         },
         listRecords: function (vehicleId) {
             return app.RecordController.listRecords(vehicleId);
@@ -190,8 +196,13 @@ define(function (require) {
     });
 
     app.on('vehicle:show', function (vehicleId) {
+        console.log('show ' + vehicleId);
         app.navigate('vehicles/' + vehicleId);
         API.showVehicle(vehicleId);
+    });
+
+    app.on('vehicle:import', function (file) {
+        API.importVehicle(file);
     });
 
     app.on('records:list', function (vehicleId) {

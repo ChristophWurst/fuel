@@ -15,17 +15,21 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 use OCA\Fuel\Service\VehicleService;
+use OCA\Fuel\Service\RecordService;
 
 class VehiclesController extends Controller {
 
 	use Errors;
 
-	private $service;
+	private $vehicleService;
+	private $recordService;
 	private $userId;
 
-	public function __construct($appName, IRequest $request, VehicleService $service, $UserId) {
+	public function __construct($appName, IRequest $request,
+		VehicleService $vehcleService, RecordService $recordService, $UserId) {
 		parent::__construct($appName, $request);
-		$this->service = $service;
+		$this->vehicleService = $vehcleService;
+		$this->recordService = $recordService;
 		$this->userId = $UserId;
 	}
 
@@ -35,7 +39,7 @@ class VehiclesController extends Controller {
 	 * @return DataResponse
 	 */
 	public function index() {
-		return new DataResponse($this->service->findAll($this->userId));
+		return new DataResponse($this->vehicleService->findAll($this->userId));
 	}
 
 	/**
@@ -46,7 +50,7 @@ class VehiclesController extends Controller {
 	 */
 	public function show($id) {
 		return $this->handleNotFound(function() use ($id) {
-				return $this->service->find($id, $this->userId);
+				return $this->vehicleService->find($id, $this->userId);
 			});
 	}
 
@@ -57,7 +61,7 @@ class VehiclesController extends Controller {
 	 * @return DataResponse
 	 */
 	public function create($name) {
-		return $this->service->create($name, $this->userId);
+		return $this->vehicleService->create($name, $this->userId);
 	}
 
 	/**
@@ -69,8 +73,47 @@ class VehiclesController extends Controller {
 	 */
 	public function update($id, $name) {
 		return $this->handleNotFound(function() use ($id, $name) {
-				return $this->service->update($id, $name, $this->userId);
+				return $this->vehicleService->update($id, $name, $this->userId);
 			});
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * 
+	 * @todo use transaction
+	 * 
+	 * @param string content
+	 */
+	public function importCsv($content) {
+		$lines = explode(PHP_EOL, $content);
+
+		$header = array_slice($lines, 0, 5);
+		$recordRows = array_slice($lines, 5);
+
+		// Get vehicle name
+		$name = str_getcsv($header[2])[0];
+
+		$vehicle = $this->vehicleService->create($name, $this->userId);
+
+		foreach ($recordRows as $row) {
+			if ($row === '') {
+				// Skip empty lines
+				continue;
+			}
+			
+			$data = str_getcsv($row);
+			$date = $data[0];
+			$odo = $data[1];
+			$fuel = $data[2];
+			$price = $data[4];
+			$this->recordService->create($odo, $fuel, $price, $date, $vehicle->getId(),
+				$this->userId);
+		}
+		
+		return new DataResponse([
+			'name' => $name,
+			'id' => $vehicle->getId(),
+		]);
 	}
 
 	/**
@@ -81,7 +124,7 @@ class VehiclesController extends Controller {
 	 */
 	public function destroy($id) {
 		return $this->handleNotFound(function() use ($id) {
-				return $this->service->delete($id, $this->userId);
+				return $this->vehicleService->delete($id, $this->userId);
 			});
 	}
 

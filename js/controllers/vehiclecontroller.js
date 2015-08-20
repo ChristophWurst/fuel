@@ -45,7 +45,42 @@ define(function (require) {
         return defer.promise();
     }
 
+    // ref: http://www.html5rocks.com/en/tutorials/file/dndfiles/
+    function importVehicle(file) {
+        // Check file type for 'text/csv'
+        if (file.type !== 'text/csv') {
+            OC.Notification.showTemporary(t('fuel', 'Import file must be of type text/csv'));
+            return;
+        }
+
+        var reader = new FileReader();
+        reader.onload = (function (theFile) {
+            return function (e) {
+                var content = e.target.result;
+
+                var url = OC.generateUrl('/apps/fuel/vehicles/import-csv');
+                $.ajax(url, {
+                    method: 'post',
+                    data: {
+                        content: content
+                    },
+                    success: function (data) {
+                        OC.Notification.showTemporary('"' + data.name + '" ' + t('fuel', 'imported successfully'));
+                        var app = require('app');
+                        app.trigger('vehicles:list');
+                    },
+                    error: function (error) {
+                        OC.Notification.showTemporary(t('fuel', 'Import error') + ': ' + error);
+                    }
+                });
+            };
+        })(file);
+
+        reader.readAsText(file);
+    }
+
     return {
-        listVehicles: listVehicles
+        listVehicles: listVehicles,
+        importVehicle: importVehicle
     };
 });

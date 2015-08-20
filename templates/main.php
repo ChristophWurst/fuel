@@ -39,3 +39,4 @@ print_unescaped($this->inc('part.new-record'));
 print_unescaped($this->inc('part.record-list'));
 print_unescaped($this->inc('part.record-list-item'));
 print_unescaped($this->inc('part.statistics'));
+print_unescaped($this->inc('part.vehicle-import'));
