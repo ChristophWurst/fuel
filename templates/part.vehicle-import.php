@@ -11,8 +11,10 @@
 ?>
 
 <script type="text/html" id="vehicle-import-template">
-	<button class="csv-import-btn icon-upload svg button-icon-label"
+	<button class="import-local-btn icon-upload svg button-icon-label"
 		title="<?php p($l->t('Import Fuelio CSV')); ?>"></button>
-	<input class="csv-import hidden"
+	<button class="import-oc-btn icon-upload svg button-icon-label"
+		title="<?php p($l->t('Import Fuelio CSV from files')); ?>"></button>
+	<input class="local-import hidden"
 	       type="file">
 </script>

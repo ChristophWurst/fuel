@@ -151,8 +151,11 @@ define(function (require) {
             // Show record list instead
             app.trigger('records:list', vehicleId);
         },
-        importVehicle: function (file) {
-            app.VehicleController.importVehicle(file);
+        importVehicleLocal: function (file) {
+            app.VehicleController.importVehicleLocal(file);
+        },
+        importVehicleOc: function (path) {
+            app.VehicleController.importVehicleOc(path);
         },
         listRecords: function (vehicleId) {
             return app.RecordController.listRecords(vehicleId);
@@ -196,13 +199,16 @@ define(function (require) {
     });
 
     app.on('vehicle:show', function (vehicleId) {
-        console.log('show ' + vehicleId);
         app.navigate('vehicles/' + vehicleId);
         API.showVehicle(vehicleId);
     });
 
-    app.on('vehicle:import', function (file) {
-        API.importVehicle(file);
+    app.on('vehicle:import:local', function (file) {
+        API.importVehicleLocal(file);
+    });
+
+    app.on('vehicle:import:oc', function (path) {
+        API.importVehicleOc(path);
     });
 
     app.on('records:list', function (vehicleId) {

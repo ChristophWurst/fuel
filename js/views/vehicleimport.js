@@ -1,3 +1,5 @@
+/* global OC */
+
 /**
  * ownCloud - fuel
  *
@@ -18,17 +20,24 @@ define(function (require) {
         template: '#vehicle-import-template',
         className: 'vehicle-import',
         events: {
-            'click .csv-import-btn': 'onImportCsvClick',
-            'change .csv-import': 'onImportCsv'
+            'click .import-local-btn': 'onImportLocalClick',
+            'click .import-oc-btn': 'onImportOcClick',
+            'change .local-import': 'onImportLocal'
         },
-        onImportCsvClick: function (e) {
+        onImportLocalClick: function (e) {
             e.stopPropagation();
-            this.$('.csv-import').click();
+            this.$('.local-import').click();
         },
-        onImportCsv: function (e) {
+        onImportOcClick: function (e) {
+            e.stopPropagation();
+            OC.dialogs.filepicker(t('fuel', 'Select Fuelio CSV file'), function(path) {
+                require('app').trigger('vehicle:import:oc', path);
+            });
+        },
+        onImportLocal: function (e) {
             var files = e.target.files;
             _.each(files, function(file) {
-                require('app').trigger('vehicle:import', file);
+                require('app').trigger('vehicle:import:local', file);
             });
         }
     });

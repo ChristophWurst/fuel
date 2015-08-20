@@ -46,7 +46,7 @@ define(function (require) {
     }
 
     // ref: http://www.html5rocks.com/en/tutorials/file/dndfiles/
-    function importVehicle(file) {
+    function importVehicleLocal(file) {
         // Check file type for 'text/csv'
         if (file.type !== 'text/csv') {
             OC.Notification.showTemporary(t('fuel', 'Import file must be of type text/csv'));
@@ -54,33 +54,52 @@ define(function (require) {
         }
 
         var reader = new FileReader();
-        reader.onload = (function (theFile) {
-            return function (e) {
-                var content = e.target.result;
+        reader.onload = function (e) {
+            var content = e.target.result;
 
-                var url = OC.generateUrl('/apps/fuel/vehicles/import-csv');
-                $.ajax(url, {
-                    method: 'post',
-                    data: {
-                        content: content
-                    },
-                    success: function (data) {
-                        OC.Notification.showTemporary('"' + data.name + '" ' + t('fuel', 'imported successfully'));
-                        var app = require('app');
-                        app.trigger('vehicles:list');
-                    },
-                    error: function (error) {
-                        OC.Notification.showTemporary(t('fuel', 'Import error') + ': ' + error);
-                    }
-                });
-            };
-        })(file);
+            var url = OC.generateUrl('/apps/fuel/vehicles/import-local');
+            $.ajax(url, {
+                method: 'post',
+                data: {
+                    content: content
+                },
+                success: function (data) {
+                    OC.Notification.showTemporary('"' + data.name + '" ' + t('fuel', 'imported successfully'));
+                    var app = require('app');
+                    app.trigger('vehicles:list');
+                },
+                error: function (xhr) {
+                    var error = JSON.parse(xhr.responseText);
+                    OC.Notification.showTemporary(t('fuel', 'Import error') + ': ' + error);
+                }
+            });
+        };
 
         reader.readAsText(file);
     }
 
+    function importVehicleOc(path) {
+        var url = OC.generateUrl('/apps/fuel/vehicles/import-oc');
+        $.ajax(url, {
+            method: 'post',
+            data: {
+                path: path
+            },
+            success: function (data) {
+                OC.Notification.showTemporary('"' + data.name + '" ' + t('fuel', 'imported successfully'));
+                var app = require('app');
+                app.trigger('vehicles:list');
+            },
+            error: function (xhr) {
+                var error = JSON.parse(xhr.responseText);
+                OC.Notification.showTemporary(t('fuel', 'Import error') + ': ' + error);
+            }
+        });
+    }
+
     return {
         listVehicles: listVehicles,
-        importVehicle: importVehicle
+        importVehicleLocal: importVehicleLocal,
+        importVehicleOc: importVehicleOc
     };
 });

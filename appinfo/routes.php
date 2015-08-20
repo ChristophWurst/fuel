@@ -42,8 +42,13 @@ return [
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'vehicles#importCsv',
-			'url' => '/vehicles/import-csv',
+			'name' => 'vehicles#importLocal',
+			'url' => '/vehicles/import-local',
+			'verb' => 'POST'
+		],
+		[
+			'name' => 'vehicles#importOc',
+			'url' => '/vehicles/import-oc',
 			'verb' => 'POST'
 		],
 	]
