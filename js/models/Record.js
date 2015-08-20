@@ -43,7 +43,7 @@ define(function (require) {
 			return Infinity;
 		},
 		getConsumption: function() {
-			var consumption = this.get('fuel') / this.getDistance();
+			var consumption = this.get('fuel') / this.getDistance() * 100;
 			return consumption.toFixed(2);
 		}
 	});
