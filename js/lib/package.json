@@ -1,13 +1,14 @@
 {
-	"name": "owncloud-fuel",
-	"description": "Fuel consumption tracker",
-	"version": "0.0.1",
-	"private": true,
-	"dependencies": {
-		"backbone": "^1.2.1",
-		"backbone.marionette": "^2.4.2",
-		"handlebars": "^3.0.3",
-		"requirejs": "^2.1.18",
-		"underscore": "^1.8.3"
-	}
+  "name": "owncloud-fuel",
+  "description": "Fuel consumption tracker",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "backbone": "^1.2.1",
+    "backbone.marionette": "^2.4.2",
+    "chart.js": "^1.0.2",
+    "handlebars": "^3.0.3",
+    "requirejs": "^2.1.18",
+    "underscore": "^1.8.3"
+  }
 }

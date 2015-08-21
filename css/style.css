@@ -41,7 +41,6 @@
 #records {
 	width: 30%;
 	height: 100%;
-	min-height: 1px;
 }
 #new-record, #record-list {
 	position: relative;
@@ -88,6 +87,45 @@
 	width: 70%;
 }
 
+#statistics .charts {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#statistics .charts .tile {
+	position: relative;
+	width: 50%;
+	height: 50%;
+	float: left;
+}
+
+#statistics .charts:last-child:after {
+	content: '';
+	clear: both;
+	display: block;
+}
+
+#statistics .charts .tile .chart-title,#statistics .charts .tile .chart-container  {
+	position: absolute;
+	left: 5px;
+	right: 5px;
+}
+
+#statistics .charts .tile .chart-title {
+	top: 0px;
+	height: 27px;
+}
+
+#statistics .charts .tile .chart-container {
+	top: 27px;
+	bottom: 5px;
+}
+
+#statistics .charts .tile .chart-title h3 {
+	font-weight: 700;
+}
+
 #app-settings-content h3 {
 	padding: 5px 0px;
 	font-weight: 700;
@@ -97,6 +135,12 @@
 	position: relative;
 	width: 110px;
 	height: 32px;
+}
+
+.container {
+	position: relative;
+	height: 100%;
+	width: 100%;
 }
 
 .loading-view {

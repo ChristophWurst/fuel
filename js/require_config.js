@@ -27,6 +27,7 @@ requirejs.config({
 		 * Libraries
 		 */
 		backbone: 'lib/node_modules/backbone/backbone-min',
+        chartjs: 'lib/node_modules/chart.js/Chart.min',
 		marionette: 'lib/node_modules/backbone.marionette/lib/backbone.marionette.min',
 		underscore: '../../../core/vendor/underscore/underscore'
 	}
