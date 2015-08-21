@@ -12,7 +12,7 @@ define(function (require) {
 	'use strinct';
 
 	var Marionette = require('marionette'),
-		Backbone = require('backbone');
+			Backbone = require('backbone');
 
 	return Marionette.ItemView.extend({
 		app: null,
@@ -29,7 +29,7 @@ define(function (require) {
 		},
 		events: {
 			'click #new-vehicle-btn': 'open',
-			'click .new-vehicle-add': 'add'
+			'click #new-vehicle-add': 'add'
 		},
 		initialize: function (options) {
 			this.app = options.app;
@@ -48,23 +48,23 @@ define(function (require) {
 					_this.close();
 				}
 			});
-			
+
 			this.model.on('change:loading', this.loading, this);
 		},
 		open: function (e) {
 			e.stopPropagation();
 			this.model.set('opened', true);
 			this.render();
-			this.$('.new-vehicle-name').focus();
+			this.$('#new-vehicle-name').focus();
 		},
 		close: function () {
 			this.model.set('opened', false);
 			this.render();
 		},
-		loading: function(state, loading) {
+		loading: function (state, loading) {
 			if (loading) {
-				this.$('.new-vehicle-name').prop('disabled', true);
-				this.$('.new-vehicle-add').prop('disabled', true);
+				this.$('#new-vehicle-name').prop('disabled', true);
+				this.$('#new-vehicle-add').prop('disabled', true);
 			} else {
 				this.$('.new-vehicle-name').prop('disabled', false);
 				this.$('.new-vehicle-add').prop('disabled', false);
@@ -72,7 +72,7 @@ define(function (require) {
 		},
 		add: function () {
 			this.model.set('loading', true);
-			var name = this.$('.new-vehicle-name').val();
+			var name = this.$('#new-vehicle-name').val();
 			var _this = this;
 			this.app.addVehicle({
 				name: name,

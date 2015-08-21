@@ -18,8 +18,11 @@
 	</div>
 	<div class="new-vehicle-add-dialog <%= showDialog() %>">
 		<span>
-			<input class="new-vehicle-name" type="text">
-			<input class="new-vehicle-add primary icon-checkmark-white" type="button">
+			<input id="new-vehicle-name"
+			       type="text">
+			<input id="new-vehicle-add"
+			       class="new-vehicle-add primary icon-checkmark-white"
+			       type="button">
 		</span>
 	</div>
 </script>
