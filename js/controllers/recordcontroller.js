@@ -9,43 +9,43 @@
  */
 
 define(function (require) {
-    'use strict';
+	'use strict';
 
-    var $ = require('jquery'),
-            Record = require('models/Record'),
-            RecordColumn = require('views/recordcolumn'),
-            LoadingView = require('views/loading');
+	var $ = require('jquery'),
+			Record = require('models/Record'),
+			RecordColumn = require('views/recordcolumn'),
+			LoadingView = require('views/loading');
 
-    function listRecords(vehicleId) {
-        var fetchingRecords = require('app').request('record:entities', vehicleId);
+	function listRecords(vehicleId) {
+		var fetchingRecords = require('app').request('record:entities', vehicleId);
 
-        // Show loading spinner
-        var loadingView = new LoadingView();
-        require('app').recordsRegion.show(loadingView);
+		// Show loading spinner
+		var loadingView = new LoadingView();
+		require('app').recordsRegion.show(loadingView);
 
-        $.when(fetchingRecords).done(function (records) {
-            var recordsView = new RecordColumn({
-                collection: records
-            });
+		$.when(fetchingRecords).done(function (records) {
+			var recordsView = new RecordColumn({
+				collection: records
+			});
 
-            recordsView.on('childview:record:show', function (childView, model) {
-                require('app').trigger('record:show', vehicleId, model.get('id'));
-            });
+			// Update statistics
+			require('app').state.get('statistics').refresh(records);
 
-            require('app').recordsRegion.show(recordsView);
+			recordsView.on('childview:record:show', function (childView, model) {
+				require('app').trigger('record:show', vehicleId, model.get('id'));
+			});
 
-            var newRecordView = recordsView.newRecord.currentView;
-            newRecordView.on('form:submit', function (data) {
-                var record = new Record(data);
-                records.create(record);
-            });
+			require('app').recordsRegion.show(recordsView);
 
-            // Update statistics
-            require('app').state.get('statistics').refresh(records);
-        });
-    }
+			var newRecordView = recordsView.newRecord.currentView;
+			newRecordView.on('form:submit', function (data) {
+				var record = new Record(data);
+				records.create(record);
+			});
+		});
+	}
 
-    return {
-        listRecords: listRecords
-    };
+	return {
+		listRecords: listRecords
+	};
 });

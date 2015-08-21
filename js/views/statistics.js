@@ -19,13 +19,16 @@ define(function (require) {
 		className: 'container',
 		charts: {},
 		modelEvents: {
-			'change': 'onRender'
+			'refreshed': 'render'
 		},
-		onRender: function () {
-			// Destroy old charts
+		destroyCharts: function () {
 			for (var chart in this.charts) {
 				this.charts[chart].destroy();
 			}
+		},
+		onRender: function () {
+			// Destroy old charts
+			this.destroyCharts();
 
 			var consumptionContex = this.$('.consumption-chart').get(0).getContext("2d");
 			var odoContex = this.$('.odo-chart').get(0).getContext("2d");
@@ -110,6 +113,9 @@ define(function (require) {
 					]
 				}, chartOptions);
 			}
+		},
+		onDestroy: function () {
+			this.destroyCharts();
 		}
 	});
 });

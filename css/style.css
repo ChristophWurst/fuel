@@ -15,10 +15,10 @@
 .new-vehicle-add-dialog {
 
 }
-.new-vehicle-name {
-
+input#new-vehicle-name[type=text] {
+	width: 85%;
 }
-.new-vehicle-add {
+input#new-vehicle-add[type=button] {
 
 }
 

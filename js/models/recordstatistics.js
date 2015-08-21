@@ -24,36 +24,32 @@ define(function (require) {
 			this.set('records', records);
 			this.set('averageConsumption', this.getAverageConsumption());
 			this.set('averagePrice', this.getAveragePrice());
+			this.trigger('refreshed');
 		},
 		getAverageConsumption: function () {
-			if (!this.records) {
-				return null;
-			}
-
 			var count = 0;
 			var sum = 0;
-			this.records.each(function (record) {
+			this.get('records').each(function (record) {
 				var consumption = Number(record.get('consumption'));
 				if (consumption !== Infinity) {
 					count++;
 					sum += consumption;
 				}
 			});
-			return sum / count;
+			var consumption = sum / count;
+			return consumption.toFixed(2);
 		},
 		getAveragePrice: function () {
-			if (!this.records) {
-				return null;
-			}
-
 			var count = 0;
 			var sum = 0;
-			this.records.each(function (record) {
+			this.get('records').each(function (record) {
 				var price = Number(record.get('price'));
+				var fuel = Number(record.get('fuel'));
 				count++;
-				sum += price;
+				sum += price / fuel;
 			});
-			return sum / count;
+			var avg = sum / count;
+			return avg.toFixed(2);
 		}
 	});
 });
