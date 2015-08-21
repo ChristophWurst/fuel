@@ -47,18 +47,18 @@ define(function (require) {
                 labels.splice(labels.length - 1);
                 consumptionData.splice(consumptionData.length - 1);
                 odoData.splice(odoData.length - 1);
-
+				
                 // Show only 20 newest data points
-                labels.splice(0, 20);
-                consumptionData.splice(0, 20);
-                odoData.splice(0, 20);
-
+                labels.splice(21);
+                consumptionData.splice(21);
+                odoData.splice(21);
+				
                 // Reverse data -> ascending date
                 labels.reverse();
                 consumptionData.reverse();
                 odoData.reverse();
                 priceData.reverse();
-
+				
                 var chartOptions = {
                     responsive: true,
                     datasetFill: false,
