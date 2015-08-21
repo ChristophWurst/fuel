@@ -9,27 +9,28 @@
  */
 
 define(function (require) {
-    'use strict';
-    
-    var Marionette = require('marionette'),
-            NewRecordView = require('views/newrecord'),
-            RecordListView = require('views/recordlist');
-    return Marionette.LayoutView.extend({
-        template: '#record-list-template',
-        regions: {
-            newRecord: '#new-record',
-            recordList: '#record-list'
-        },
-        initialize: function (options) {
-            this.collection = options.collection;
-        },
-        onShow: function () {
-            var newRecordView = new NewRecordView();
-            this.newRecord.show(newRecordView);
-            var recordList = new RecordListView({
-                collection: this.collection
-            });
-            this.recordList.show(recordList);
-        }
-    });
+	'use strict';
+
+	var Marionette = require('marionette'),
+			NewRecordView = require('views/newrecord'),
+			RecordListView = require('views/recordlist');
+	return Marionette.LayoutView.extend({
+		template: '#record-list-template',
+		id: 'record-column',
+		regions: {
+			newRecord: '#new-record',
+			recordList: '#record-list'
+		},
+		initialize: function (options) {
+			this.collection = options.collection;
+		},
+		onShow: function () {
+			var newRecordView = new NewRecordView();
+			this.newRecord.show(newRecordView);
+			var recordList = new RecordListView({
+				collection: this.collection
+			});
+			this.recordList.show(recordList);
+		}
+	});
 });
