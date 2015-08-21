@@ -16,20 +16,20 @@ define(function (require) {
 	return Backbone.Model.extend({
 		defaults: {
 			app: null,
-            records: null,
+			records: null,
 			averageConsumption: null,
 			averagePrice: null
 		},
 		refresh: function (records) {
-            this.set('records', records);
+			this.set('records', records);
 			this.set('averageConsumption', this.getAverageConsumption());
 			this.set('averagePrice', this.getAveragePrice());
 		},
 		getAverageConsumption: function () {
-            if (!this.records) {
-                return null;
-            }
-            
+			if (!this.records) {
+				return null;
+			}
+
 			var count = 0;
 			var sum = 0;
 			this.records.each(function (record) {
@@ -42,10 +42,10 @@ define(function (require) {
 			return sum / count;
 		},
 		getAveragePrice: function () {
-            if (!this.records) {
-                return null;
-            }
-            
+			if (!this.records) {
+				return null;
+			}
+
 			var count = 0;
 			var sum = 0;
 			this.records.each(function (record) {
