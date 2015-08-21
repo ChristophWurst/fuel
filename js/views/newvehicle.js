@@ -51,7 +51,8 @@ define(function (require) {
 			
 			this.model.on('change:loading', this.loading, this);
 		},
-		open: function () {
+		open: function (e) {
+			e.stopPropagation();
 			this.model.set('opened', true);
 			this.render();
 			this.$('.new-vehicle-name').focus();
