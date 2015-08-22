@@ -10,6 +10,20 @@
  */
 ?>
 <script id="vehicle-list-item-template" type="text/html">
+	<% if (isEditable()) { %>
+	<div class="app-navigation-entry-edit">
+		<form class="edit-form">
+			<input value="<%= name %>"
+			       class="vehicle-name"
+			       name="vehicle-name"
+			       required=""
+			       type="text">
+			<input value=""
+			       class="action icon-checkmark"
+			       type="submit">
+		</form>
+	</div>
+	<% } else { %>
 	<a href="#vehicles/<%= id %>">
 		<%= name %>
 	</a>
@@ -20,11 +34,17 @@
 			</li>
 		</ul>
 	</div>
+	<% } %>
+
 	<div class="app-navigation-entry-menu <%= menuOpened() %>">
 		<ul>	
 			<li>
-				<button class="icon-delete delete-vehicle" title="<?php p($l->t('Delete vehicle')); ?>">
-				</button>
+				<button class="icon-rename rename-vehicle"
+					title="<?php p($l->t('Rename vehicle')); ?>"></button>
+			</li>
+			<li>
+				<button class="icon-delete delete-vehicle"
+					title="<?php p($l->t('Delete vehicle')); ?>"></button>
 			</li>
 		</ul>
 	</div>

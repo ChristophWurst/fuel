@@ -11,95 +11,100 @@
  */
 
 define(function (require) {
-    'use strinct';
+	'use strinct';
 
-    var $ = require('jquery'),
-            VehiclesView = require('views/vehiclelist'),
-            LoadingView = require('views/loading');
+	var $ = require('jquery'),
+			VehiclesView = require('views/vehiclelist'),
+			LoadingView = require('views/loading');
 
-    function listVehicles() {
-        var defer = $.Deferred();
-        var fetchingVehicles = require('app').request('vehicle:entities');
+	function listVehicles() {
+		var defer = $.Deferred();
+		var fetchingVehicles = require('app').request('vehicle:entities');
 
-        // Show loading spinner
-        var loadingView = new LoadingView();
-        require('app').vehiclesRegion.show(loadingView);
+		// Show loading spinner
+		var loadingView = new LoadingView();
+		require('app').vehiclesRegion.show(loadingView);
 
-        $.when(fetchingVehicles).done(function (vehicles) {
-            var vehiclesView = new VehiclesView({
-                collection: vehicles
-            });
+		$.when(fetchingVehicles).done(function (vehicles) {
+			var vehiclesView = new VehiclesView({
+				collection: vehicles
+			});
 
-            vehiclesView.on('childview:records:list', function (childView, model) {
-                require('app').trigger('records:list', model.get('id'));
-            });
+			vehiclesView.on('childview:records:list', function (childView, model) {
+				require('app').trigger('records:list', model.get('id'));
+			});
 
-            vehiclesView.on('childview:vehicle:delete', function (childView, model) {
-                model.destroy();
-            });
+			vehiclesView.on('childview:vehicle:edit', function (childView, model, data) {
+				model.set('name', data.name);
+				model.save();
+			});
 
-            require('app').vehiclesRegion.show(vehiclesView);
-            defer.resolve();
-        });
+			vehiclesView.on('childview:vehicle:delete', function (childView, model) {
+				model.destroy();
+			});
 
-        return defer.promise();
-    }
+			require('app').vehiclesRegion.show(vehiclesView);
+			defer.resolve();
+		});
 
-    // ref: http://www.html5rocks.com/en/tutorials/file/dndfiles/
-    function importVehicleLocal(file) {
-        // Check file type for 'text/csv'
-        if (file.type !== 'text/csv') {
-            OC.Notification.showTemporary(t('fuel', 'Import file must be of type text/csv'));
-            return;
-        }
+		return defer.promise();
+	}
 
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            var content = e.target.result;
+	// ref: http://www.html5rocks.com/en/tutorials/file/dndfiles/
+	function importVehicleLocal(file) {
+		// Check file type for 'text/csv'
+		if (file.type !== 'text/csv') {
+			OC.Notification.showTemporary(t('fuel', 'Import file must be of type text/csv'));
+			return;
+		}
 
-            var url = OC.generateUrl('/apps/fuel/vehicles/import-local');
-            $.ajax(url, {
-                method: 'post',
-                data: {
-                    content: content
-                },
-                success: function (data) {
-                    OC.Notification.showTemporary('"' + data.name + '" ' + t('fuel', 'imported successfully'));
-                    var app = require('app');
-                    app.trigger('vehicles:list');
-                },
-                error: function (xhr) {
-                    var error = JSON.parse(xhr.responseText);
-                    OC.Notification.showTemporary(t('fuel', 'Import error') + ': ' + error);
-                }
-            });
-        };
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			var content = e.target.result;
 
-        reader.readAsText(file);
-    }
+			var url = OC.generateUrl('/apps/fuel/vehicles/import-local');
+			$.ajax(url, {
+				method: 'post',
+				data: {
+					content: content
+				},
+				success: function (data) {
+					OC.Notification.showTemporary('"' + data.name + '" ' + t('fuel', 'imported successfully'));
+					var app = require('app');
+					app.trigger('vehicles:list');
+				},
+				error: function (xhr) {
+					var error = JSON.parse(xhr.responseText);
+					OC.Notification.showTemporary(t('fuel', 'Import error') + ': ' + error);
+				}
+			});
+		};
 
-    function importVehicleOc(path) {
-        var url = OC.generateUrl('/apps/fuel/vehicles/import-oc');
-        $.ajax(url, {
-            method: 'post',
-            data: {
-                path: path
-            },
-            success: function (data) {
-                OC.Notification.showTemporary('"' + data.name + '" ' + t('fuel', 'imported successfully'));
-                var app = require('app');
-                app.trigger('vehicles:list');
-            },
-            error: function (xhr) {
-                var error = JSON.parse(xhr.responseText);
-                OC.Notification.showTemporary(t('fuel', 'Import error') + ': ' + error);
-            }
-        });
-    }
+		reader.readAsText(file);
+	}
 
-    return {
-        listVehicles: listVehicles,
-        importVehicleLocal: importVehicleLocal,
-        importVehicleOc: importVehicleOc
-    };
+	function importVehicleOc(path) {
+		var url = OC.generateUrl('/apps/fuel/vehicles/import-oc');
+		$.ajax(url, {
+			method: 'post',
+			data: {
+				path: path
+			},
+			success: function (data) {
+				OC.Notification.showTemporary('"' + data.name + '" ' + t('fuel', 'imported successfully'));
+				var app = require('app');
+				app.trigger('vehicles:list');
+			},
+			error: function (xhr) {
+				var error = JSON.parse(xhr.responseText);
+				OC.Notification.showTemporary(t('fuel', 'Import error') + ': ' + error);
+			}
+		});
+	}
+
+	return {
+		listVehicles: listVehicles,
+		importVehicleLocal: importVehicleLocal,
+		importVehicleOc: importVehicleOc
+	};
 });
