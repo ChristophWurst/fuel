@@ -24,11 +24,17 @@ define(function (require) {
 			}
 
 			var records = vehicle.get('records');
-			records.fetch({
-				success: function (data) {
-					defer.resolve(data);
-				}
-			});
+			if (records.fetched) {
+				// Records have already been fetched -> use this cached version instead of asking the server again
+				defer.resolve(records);
+			} else {
+				// Records have not been fetched yet
+				records.fetch({
+					success: function (data) {
+						defer.resolve(data);
+					}
+				});
+			}
 		});
 
 		return defer.promise();

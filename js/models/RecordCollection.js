@@ -14,7 +14,7 @@ define(function (require) {
 	'use strinct';
 
 	var Backbone = require('backbone'),
-		Record = require('models/Record');
+			Record = require('models/Record');
 
 	return Backbone.Collection.extend({
 		model: Record,
@@ -25,15 +25,20 @@ define(function (require) {
 		},
 		vehicleId: null,
 		url: null,
+		fetched: false,
 		initialize: function (data, options) {
 			options = options || {};
 			this.vehicleId = options.vehicleId;
-			if (this.vehicleId) {
-				this.url = OC.generateUrl('/apps/fuel/vehicles/{vehicleId}/records', {
-					vehicleId: this.vehicleId
-				});
-			}
+			this.url = OC.generateUrl('/apps/fuel/vehicles/{vehicleId}/records', {
+				vehicleId: this.vehicleId
+			});
+
 			this.on('add', this.change); //TODO: trigger only once per change
+
+			// Save fetched state to easily determine if the collection has to be fetched or not
+			this.on('sync', function () {
+				this.fetched = true;
+			});
 		},
 		change: function () {
 			// Set predecessors
