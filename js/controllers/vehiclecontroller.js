@@ -44,7 +44,7 @@ define(function (require) {
 			});
 
 			require('app').vehiclesRegion.show(vehiclesView);
-			defer.resolve();
+			defer.resolve(vehicles);
 		});
 
 		return defer.promise();
