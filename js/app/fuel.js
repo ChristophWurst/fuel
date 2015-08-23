@@ -144,15 +144,19 @@ define(function (require) {
 	});
 
 	var API = {
-		listVehicles: function () {
+		listVehicles: function (selectFirst) {
+			selectFirst = selectFirst || false;
+
 			var promise = app.VehicleController.listVehicles();
 
-			$.when(promise).done(function (vehicles) {
-				// Automatically select first vehicle
-				if (vehicles.length > 0) {
-					app.trigger('vehicle:show', vehicles.first().get('id'));
-				}
-			});
+			if (selectFirst) {
+				$.when(promise).done(function (vehicles) {
+					// Automatically select first vehicle
+					if (vehicles.length > 0) {
+						app.trigger('vehicle:show', vehicles.first().get('id'));
+					}
+				});
+			}
 
 			return promise;
 		},
@@ -177,7 +181,7 @@ define(function (require) {
 
 	var RoutingController = {
 		listVehicles: function () {
-			API.listVehicles();
+			API.listVehicles(true);
 		},
 		showVehicle: function (vehicleId) {
 			vehicleId = Number(vehicleId);
@@ -187,7 +191,6 @@ define(function (require) {
 			vehicleId = Number(vehicleId);
 			$.when(API.listVehicles()).done(function () {
 				app.trigger('vehicle:show', vehicleId);
-				API.listRecords(vehicleId);
 			});
 		},
 		showRecord: function (vehicleId, recordId) {

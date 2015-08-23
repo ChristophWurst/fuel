@@ -14,7 +14,8 @@ define(function (require) {
 	var $ = require('jquery'),
 			Record = require('models/Record'),
 			RecordColumn = require('views/recordcolumn'),
-			LoadingView = require('views/loading');
+			LoadingView = require('views/loading'),
+			VehicleNotFoundView = require('views/vehiclenotfound');
 
 	function listRecords(vehicleId) {
 		var fetchingRecords = require('app').request('record:entities', vehicleId);
@@ -24,6 +25,12 @@ define(function (require) {
 		require('app').recordsRegion.show(loadingView);
 
 		$.when(fetchingRecords).done(function (records) {
+			if (!records) {
+				var notFoundView = new VehicleNotFoundView();
+				require('app').recordsRegion.show(notFoundView);
+				return;
+			}
+				
 			var recordsView = new RecordColumn({
 				collection: records
 			});

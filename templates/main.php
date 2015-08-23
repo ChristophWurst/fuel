@@ -35,6 +35,7 @@ style('fuel', 'style');
  */
 print_unescaped($this->inc('part.new-vehicle'));
 print_unescaped($this->inc('part.vehicle-list-item'));
+print_unescaped($this->inc('part.vehicle-not-found'));
 print_unescaped($this->inc('part.new-record'));
 print_unescaped($this->inc('part.record-list'));
 print_unescaped($this->inc('part.record-list-item'));

@@ -9,26 +9,32 @@
  */
 
 define(function (require) {
-    var $ = require('jquery'),
-            VehicleService = require('service/vehicle');
+	var $ = require('jquery'),
+			VehicleService = require('service/vehicle');
 
-    function getRecordEntities(vehicleId) {
-        var fetchingVehicle = VehicleService.getVehicleEntity(vehicleId);
-        var defer = $.Deferred();
+	function getRecordEntities(vehicleId) {
+		var fetchingVehicle = VehicleService.getVehicleEntity(vehicleId);
+		var defer = $.Deferred();
 
-        $.when(fetchingVehicle).done(function (vehicle) {
-            var records = vehicle.get('records');
-            records.fetch({
-                success: function (data) {
-                    defer.resolve(data);
-                }
-            });
-        });
+		$.when(fetchingVehicle).done(function (vehicle) {
+			if (!vehicle) {
+				// Vehicle was not found
+				defer.resolve(undefined);
+				return;
+			}
 
-        return defer.promise();
-    }
+			var records = vehicle.get('records');
+			records.fetch({
+				success: function (data) {
+					defer.resolve(data);
+				}
+			});
+		});
 
-    return {
-        getRecordEntities: getRecordEntities
-    };
+		return defer.promise();
+	}
+
+	return {
+		getRecordEntities: getRecordEntities
+	};
 });

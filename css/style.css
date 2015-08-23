@@ -156,3 +156,17 @@ input#new-vehicle-add[type=button] {
 .hidden {
 	display: none;
 }
+
+.center-container {
+	display: table;
+}
+
+.center-content {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.text-error {
+	font-weight: 700;
+}
