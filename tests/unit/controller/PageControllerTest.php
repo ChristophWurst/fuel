@@ -9,11 +9,8 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
-
-namespace OCA\Fuel\Controller;
-
-use PHPUnit_Framework_TestCase;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCA\Fuel\Controller\PageController;
 
 class PageControllerTest extends PHPUnit_Framework_TestCase {
 
@@ -23,9 +20,11 @@ class PageControllerTest extends PHPUnit_Framework_TestCase {
 	public function setUp() {
 		$request = $this->getMockBuilder('OCP\IRequest')->getMock();
 
-		$this->controller = new PageController(
-			'fuel', $request, $this->userId
-		);
+		$this->controller = new PageController('fuel', $request, $this->userId);
+	}
+	
+	public function testIndex() {
+		$this->controller->index();
 	}
 
 }

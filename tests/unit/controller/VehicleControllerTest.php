@@ -9,7 +9,6 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
-use PHPUnit_Framework_TestCase;
 use OCP\IRequest;
 use OCP\IL10N;
 use OC\AppFramework\Http;
