@@ -11,6 +11,12 @@ env:
   - DB=postgresql BRANCH=master
   - DB=mysql BRANCH=master
 
+addons:
+  apt:
+    packages:
+      python3-jinja2
+      pyton3-setuptools
+
 matrix:
   allow_failures:
     - php: 7
@@ -18,7 +24,6 @@ matrix:
 
 install:
   # install ocdev
-  - apt-get -y install python3-jinja2 python3-setuptools
   - easy_install3 requests
   - easy_install3 ocdev
   # set up postgresql
