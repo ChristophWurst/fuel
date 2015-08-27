@@ -14,8 +14,10 @@ env:
 addons:
   apt:
     packages:
+      - python3
       - python3-jinja2
       - python3-setuptools
+      - python3-pip
 
 matrix:
   allow_failures:
@@ -24,9 +26,10 @@ matrix:
 
 install:
   # DEBUG
-  - python --version
+  - python3 --version
+  - pip --version
   # install ocdev
-  - pip install --user ocdev
+  - easy_install3 --user ocdev
   # set up postgresql
   - createuser -U travis -s oc_autotest
   # set up mysql
@@ -35,7 +38,7 @@ install:
   - mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost';"
   # install owncloud
   - cd ..
-  - ocdev setup core --dir owncloud --branch $BRANCH --no-history
+  - /home/travis/.local/bin/ocdev setup core --dir owncloud --branch $BRANCH --no-history
   - cd owncloud
   - ocdev ci $DB
   # enable fuel
