@@ -24,7 +24,7 @@ matrix:
 
 install:
   # install ocdev
-  - pip install ocdev
+  - pip install --user ocdev
   # set up postgresql
   - createuser -U travis -s oc_autotest
   # set up mysql
