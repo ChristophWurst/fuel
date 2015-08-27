@@ -14,8 +14,8 @@ env:
 addons:
   apt:
     packages:
-      python3-jinja2
-      pyton3-setuptools
+      - python3-jinja2
+      - python3-setuptools
 
 matrix:
   allow_failures:
