@@ -22,7 +22,7 @@ trait Errors {
 		try {
 			return new DataResponse($callback());
 		} catch (NotFoundException $e) {
-			return new DataResponse($ex, Http::STATUS_NOT_FOUND);
+			return new DataResponse($e, Http::STATUS_NOT_FOUND);
 		} catch (Exception $e) {
 			$message = [
 				'message' => $e->getMessage(),
