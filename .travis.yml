@@ -23,6 +23,8 @@ matrix:
     - php: hhvm
 
 install:
+  # DEBUG
+  - python --version
   # install ocdev
   - pip install --user ocdev
   # set up postgresql
