@@ -12,6 +12,7 @@ namespace OCA\Fuel\Controller;
  * @copyright Christoph Wurst 2015
  */
 use Closure;
+use Exception;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCA\Fuel\Service\NotFoundException;
