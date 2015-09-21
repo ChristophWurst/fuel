@@ -14,7 +14,6 @@ namespace OCA\Fuel\Controller;
 
 use \OCP\IRequest;
 use \OCP\AppFramework\Http\TemplateResponse;
-use \OCP\AppFramework\Http\DataResponse;
 use \OCP\AppFramework\Controller;
 
 class PageController extends Controller {
@@ -31,7 +30,9 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index() {
-		$params = ['user' => $this->userId];
+		$params = [
+			'user' => $this->userId
+		];
 		return new TemplateResponse('fuel', 'main', $params);
 	}
 

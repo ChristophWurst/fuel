@@ -15,7 +15,7 @@ use OCP\AppFramework\App;
 
 class Application extends App {
 
-	public function __construct($appName, $urlParams = array()) {
+	public function __construct($urlParams = []) {
 		parent::__construct('fuel', $urlParams);
 
 		$container = $this->getContainer();
