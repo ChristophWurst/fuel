@@ -1,5 +1,7 @@
 <?php
 
+namespace OCA\Fuel\Tests\Unit\Controller;
+
 /**
  * ownCloud - fuel
  *
@@ -9,10 +11,10 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
+use PHPUnit_Framework_TestCase;
 use OCP\IRequest;
 use OCP\IL10N;
 use OC\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
 use OCA\Fuel\Controller\VehiclesController;
 use OCA\Fuel\Service\Logger;
 use OCA\Fuel\Service\NotFoundException;
@@ -62,14 +64,14 @@ class VehicleControllerTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($vehicle, $result->getData());
 	}
-	
+
 	public function testUpdateNotFound() {
 		$this->vehicleService->expects($this->once())
 			->method('update')
 			->will($this->throwException(new NotFoundException()));
-		
+
 		$result = $this->controller->update(17, 'name');
-		
+
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $result->getStatus());
 	}
 

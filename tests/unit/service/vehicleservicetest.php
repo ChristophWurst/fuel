@@ -1,5 +1,7 @@
 <?php
 
+namespace OCA\Fuel\Tests\Unit\Service;
+
 /**
  * ownCloud - fuel
  *
@@ -9,7 +11,7 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
-use OCP\AppFramework\Db\DoesNotExistException;
+use PHPUnit_Framework_TestCase;
 use OCA\Fuel\Db\Vehicle;
 use OCA\Fuel\Db\VehicleMapper;
 use OCA\Fuel\Service\VehicleService;

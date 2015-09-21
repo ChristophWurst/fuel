@@ -1,5 +1,7 @@
 <?php
 
+namespace OCA\Fuel\Tests\Unit\Controller;
+
 /**
  * ownCloud - fuel
  *
@@ -9,7 +11,7 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
-use OCP\AppFramework\Http\TemplateResponse;
+use PHPUnit_Framework_TestCase;
 use OCA\Fuel\Controller\PageController;
 
 class PageControllerTest extends PHPUnit_Framework_TestCase {
@@ -22,7 +24,7 @@ class PageControllerTest extends PHPUnit_Framework_TestCase {
 
 		$this->controller = new PageController('fuel', $request, $this->userId);
 	}
-	
+
 	public function testIndex() {
 		$this->controller->index();
 	}
