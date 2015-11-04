@@ -1,7 +1,5 @@
 <?php
 
-namespace OCA\Fuel\Service;
-
 /**
  * ownCloud - fuel
  *
@@ -11,6 +9,10 @@ namespace OCA\Fuel\Service;
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
+
+namespace OCA\Fuel\Service;
+
+use Exception;
 use OCP\ILogger;
 
 class Logger implements ILogger {
@@ -68,6 +70,11 @@ class Logger implements ILogger {
 	public function warning($message, array $context = []) {
 		$c = array_merge($this->context, $context);
 		$this->logger->warning($message, $c);
+	}
+
+	public function logException(Exception $exception, array $context = []) {
+		$c = array_merge($this->context, $context);
+		$this->logger->logException($exception, $c);
 	}
 
 }

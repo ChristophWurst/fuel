@@ -59,6 +59,7 @@ class VehiclesApiController extends Controller {
 	 * @CORS
 	 * @NoCSRFRequired
 	 * @NoAdminRequired
+	 * @ValidateVehicle
 	 * 
 	 * @param string $name
 	 * @return DataResponse
@@ -71,6 +72,7 @@ class VehiclesApiController extends Controller {
 	 * @CORS
 	 * @NoCSRFRequired
 	 * @NoAdminRequired
+	 * @ValidateVehicle
 	 * 
 	 * @param int $id
 	 * @param string $name

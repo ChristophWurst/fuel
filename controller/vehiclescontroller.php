@@ -98,6 +98,7 @@ class VehiclesController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @ValidateVehicle
 	 * 
 	 * @param string $name
 	 * @return DataResponse
@@ -108,6 +109,7 @@ class VehiclesController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @ValidateVehicle
 	 * 
 	 * @param int $id
 	 * @param string $name
