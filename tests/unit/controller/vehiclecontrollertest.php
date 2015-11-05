@@ -1,7 +1,5 @@
 <?php
 
-namespace OCA\Fuel\Tests\Unit\Controller;
-
 /**
  * ownCloud - fuel
  *
@@ -11,6 +9,9 @@ namespace OCA\Fuel\Tests\Unit\Controller;
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
+
+namespace OCA\Fuel\Test\Unit\Controller;
+
 use PHPUnit_Framework_TestCase;
 use OCP\IRequest;
 use OCP\IL10N;
