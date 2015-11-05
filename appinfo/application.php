@@ -12,6 +12,9 @@ namespace OCA\Fuel\AppInfo;
  * @copyright Christoph Wurst 2015
  */
 use OCP\AppFramework\App;
+use OCP\IRequest;
+use OCA\Fuel\Middleware\VehicleValidationMiddleware;
+use OCA\Fuel\Validation\ValidatorFactory;
 
 class Application extends App {
 
@@ -31,6 +34,20 @@ class Application extends App {
 		 */
 		$L10n = $container->getServer()->getL10N('fuel');
 		$container->registerParameter('L10n', $L10n);
+
+		/**
+		 * Middleware
+		 */
+		$container->registerService('VehicleValidationMiddleware',
+			function($c) {
+			return new VehicleValidationMiddleware(
+				$c->query('ControllerMethodReflector'),
+				$c->query(IRequest::class),
+				$c->query(ValidatorFactory::class)
+			);
+		});
+
+		$container->registerMiddleWare('VehicleValidationMiddleware');
 	}
 
 }
