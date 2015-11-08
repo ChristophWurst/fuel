@@ -43,7 +43,7 @@ class Validator implements IValidator {
 	public function validateMinLength($name, $value, $length) {
 		if (is_null($value) || strlen($value) < $length) {
 			$this->errors[] = "$name must be at least"
-				. "$length characters long";
+				. " $length characters long";
 		}
 		return $this;
 	}
@@ -58,7 +58,7 @@ class Validator implements IValidator {
 	public function validateMaxLength($name, $value, $length) {
 		if (is_null($value) || strlen($value) > $length) {
 			$this->errors[] = "$name length must not exceed"
-				. "$length characters";
+				. " $length characters";
 		}
 		return $this;
 	}

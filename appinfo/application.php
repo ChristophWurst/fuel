@@ -14,7 +14,8 @@ namespace OCA\Fuel\AppInfo;
 use OCP\AppFramework\App;
 use OCP\IRequest;
 use OCA\Fuel\Middleware\VehicleValidationMiddleware;
-use OCA\Fuel\Validation\ValidatorFactory;
+use OCA\Fuel\Validation\IValidator;
+use OCA\Fuel\Validation\Validator;
 
 class Application extends App {
 
@@ -36,6 +37,11 @@ class Application extends App {
 		$container->registerParameter('L10n', $L10n);
 
 		/**
+		 * Register which validator to inject
+		 */
+		$container->registerAlias(IValidator::class, Validator::class);
+
+		/**
 		 * Middleware
 		 */
 		$container->registerService('VehicleValidationMiddleware',
@@ -43,7 +49,7 @@ class Application extends App {
 			return new VehicleValidationMiddleware(
 				$c->query('ControllerMethodReflector'),
 				$c->query(IRequest::class),
-				$c->query(ValidatorFactory::class)
+				$c->query(IValidator::class)
 			);
 		});
 
