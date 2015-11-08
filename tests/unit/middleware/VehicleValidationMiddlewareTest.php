@@ -16,7 +16,6 @@ use PHPUnit_Framework_TestCase;
 use OCP\AppFramework\Utility\IControllerMethodReflector;
 use OCP\IRequest;
 use OCA\Fuel\Validation\IValidator;
-use OCA\Fuel\Validation\ValidatorFactory;
 use OCA\Fuel\Validation\ValidationException;
 use OCA\Fuel\Validation\ValidationResponse;
 use OCA\Fuel\Middleware\VehicleValidationMiddleware;
@@ -25,7 +24,6 @@ class VehicleValidationMiddlewareTest extends PHPUnit_Framework_TestCase {
 
 	private $reflector;
 	private $request;
-	private $validatorFactory;
 	private $validator;
 	private $middleware;
 
@@ -38,15 +36,12 @@ class VehicleValidationMiddlewareTest extends PHPUnit_Framework_TestCase {
 		$this->request = $this->getMockBuilder(IRequest::class)
 			->disableOriginalConstructor()
 			->getMock();
-		$this->validatorFactory = $this->getMockBuilder(ValidatorFactory::class)
-			->disableOriginalConstructor()
-			->getMock();
 		$this->validator = $this->getMockBuilder(IValidator::class)
 			->disableOriginalConstructor()
 			->getMock();
 
 		$this->middleware = new VehicleValidationMiddleware($this->reflector,
-			$this->request, $this->validatorFactory);
+			$this->request, $this->validator);
 	}
 
 	public function testBeforeControllerNoAnnotation() {
@@ -68,9 +63,6 @@ class VehicleValidationMiddlewareTest extends PHPUnit_Framework_TestCase {
 			->method('getParam')
 			->with("name")
 			->will($this->returnValue($name));
-		$this->validatorFactory->expects($this->once())
-			->method('newValidator')
-			->will($this->returnValue($this->validator));
 		$this->validator->expects($this->once())
 			->method('validateRequired');
 		$this->validator->expects($this->once())
