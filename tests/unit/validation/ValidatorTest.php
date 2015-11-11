@@ -37,8 +37,9 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
 	public function testValidateRequireExisting() {
 		$value = "Test";
 
-		$this->validator->validateRequired("my variable", $value);
+		$result = $this->validator->validateRequired("my variable", $value);
 
+		$this->assertTrue($result);
 		$this->assertTrue($this->validator->passes());
 		$this->assertFalse($this->validator->fails());
 		$this->assertEmpty($this->validator->getErrors());
@@ -47,18 +48,21 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
 	public function testValidateRequireMissing() {
 		$value = null;
 
-		$this->validator->validateRequired("my non-existing variable", $value);
+		$result = $this->validator->validateRequired("my non-existing variable",
+			$value);
 
+		$this->assertFalse($result);
 		$this->assertFalse($this->validator->passes());
 		$this->assertTrue($this->validator->fails());
 		$this->assertEquals(1, count($this->validator->getErrors()));
 	}
-	
+
 	public function testValidateMinLengthPass() {
 		$value = "my very long value";
 
-		$this->validator->validateMinLength("my variable", $value, 10);
+		$result = $this->validator->validateMinLength("my variable", $value, 10);
 
+		$this->assertTrue($result);
 		$this->assertTrue($this->validator->passes());
 		$this->assertFalse($this->validator->fails());
 		$this->assertEmpty($this->validator->getErrors());
@@ -67,18 +71,20 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
 	public function testValidateMinLengthError() {
 		$value = "too short";
 
-		$this->validator->validateMinLength("my variable", $value, 10);
+		$result = $this->validator->validateMinLength("my variable", $value, 10);
 
+		$this->assertFalse($result);
 		$this->assertFalse($this->validator->passes());
 		$this->assertTrue($this->validator->fails());
 		$this->assertEquals(1, count($this->validator->getErrors()));
 	}
-	
+
 	public function testValidateMaxLengthPass() {
 		$value = "ttttest";
 
-		$this->validator->validateMaxLength("my variable", $value, 10);
+		$result = $this->validator->validateMaxLength("my variable", $value, 10);
 
+		$this->assertTrue($result);
 		$this->assertTrue($this->validator->passes());
 		$this->assertFalse($this->validator->fails());
 		$this->assertEmpty($this->validator->getErrors());
@@ -87,11 +93,95 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
 	public function testValidateMaxLengthError() {
 		$value = "this might be too long";
 
-		$this->validator->validateMaxLength("my variable", $value, 10);
+		$result = $this->validator->validateMaxLength("my variable", $value, 10);
 
+		$this->assertFalse($result);
 		$this->assertFalse($this->validator->passes());
 		$this->assertTrue($this->validator->fails());
-		$this->assertEquals(1, count($this->validator->getErrors()));
+		$this->assertCount(1, $this->validator->getErrors());
 	}
-	
+
+	public function validateIntDataProvider() {
+		return [
+			[null,
+				false],
+			[123,
+				true],
+			['213',
+				true],
+			[' 2',
+				true],
+		];
+	}
+
+	/**
+	 * @dataProvider validateIntDataProvider
+	 */
+	public function testValidateInt($value, $expected) {
+		$result = $this->validator->validateInt("my var", $value);
+
+		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, $this->validator->passes());
+		$this->assertEquals(!$expected, $this->validator->fails());
+		$this->assertCount($expected ? 0 : 1, $this->validator->getErrors());
+	}
+
+	public function validateFloatDataProvider() {
+		return [
+			[null,
+				false],
+			[123,
+				true],
+			[123.4,
+				true],
+			['213',
+				true],
+			['123.4',
+				true],
+			[' 2',
+				true],
+		];
+	}
+
+	/**
+	 * @dataProvider validateFloatDataProvider
+	 */
+	public function testValidateFloat($value, $expected) {
+		$result = $this->validator->validateFloat("my var", $value);
+
+		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, $this->validator->passes());
+		$this->assertEquals(!$expected, $this->validator->fails());
+		$this->assertCount($expected ? 0 : 1, $this->validator->getErrors());
+	}
+
+	public function validateDateDataProvider() {
+		return [
+			[null,
+				false],
+			['2015-11-08T14:30:06.694Z',
+				false],
+			['2015/9/3',
+				false],
+			['15/9/3',
+				false],
+			['2015-09-03',
+				true],
+			['2015-12-32',
+				false]
+		];
+	}
+
+	/**
+	 * @dataProvider validateDateDataProvider
+	 */
+	public function testValidateDate($value, $expected) {
+		$result = $this->validator->validateDate("my var", $value);
+
+		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, $this->validator->passes());
+		$this->assertEquals(!$expected, $this->validator->fails());
+		$this->assertCount($expected ? 0 : 1, $this->validator->getErrors());
+	}
+
 }

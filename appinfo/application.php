@@ -12,8 +12,8 @@ namespace OCA\Fuel\AppInfo;
  * @copyright Christoph Wurst 2015
  */
 use OCP\AppFramework\App;
-use OCP\IRequest;
 use OCA\Fuel\Middleware\VehicleValidationMiddleware;
+use OCA\Fuel\Middleware\RecordValidationMiddleware;
 use OCA\Fuel\Validation\IValidator;
 use OCA\Fuel\Validation\Validator;
 
@@ -39,21 +39,20 @@ class Application extends App {
 		/**
 		 * Register which validator to inject
 		 */
-		$container->registerAlias(IValidator::class, Validator::class);
+		$container->registerService(IValidator::class, function($c) {
+			return $c->query(Validator::class);
+		}, false);
 
 		/**
 		 * Middleware
 		 */
-		$container->registerService('VehicleValidationMiddleware',
-			function($c) {
-			return new VehicleValidationMiddleware(
-				$c->query('ControllerMethodReflector'),
-				$c->query(IRequest::class),
-				$c->query(IValidator::class)
-			);
-		});
+		$container->registerAlias('VehicleValidationMiddleware',
+			VehicleValidationMiddleware::class);
+		$container->registerAlias("RecordValidatonMiddleware",
+			RecordValidationMiddleware::class);
 
 		$container->registerMiddleWare('VehicleValidationMiddleware');
+		$container->registerMiddleWare("RecordValidatonMiddleware");
 	}
 
 }
