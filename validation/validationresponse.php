@@ -23,7 +23,7 @@ class ValidationResponse extends JSONResponse {
 	public function __construct(IValidator $validator) {
 		parent::__construct([
 			"errors" => $validator->getErrors()
-		], Http::STATUS_BAD_REQUEST);
+		], Http::STATUS_UNPROCESSABLE_ENTITY);
 	}
 
 }
