@@ -37,7 +37,7 @@ class ValidationResponseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testHasHttpStatus() {
-		$this->assertSame(Http::STATUS_BAD_REQUEST, $this->response->getStatus());
+		$this->assertSame(Http::STATUS_UNPROCESSABLE_ENTITY, $this->response->getStatus());
 	}
 
 }
