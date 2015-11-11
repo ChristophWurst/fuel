@@ -63,6 +63,7 @@ class RecordsApiController extends ApiController {
 	 * @CORS
 	 * @NoCSRFRequired
 	 * @NoAdminRequired
+	 * @ValidateRecord
 	 * 
 	 * @param int odo
 	 * @param float fuel
@@ -81,6 +82,7 @@ class RecordsApiController extends ApiController {
 	 * @CORS
 	 * @NoCSRFRequired
 	 * @NoAdminRequired
+	 * @ValidateRecord
 	 * 
 	 * @param int id
 	 * @param int odo

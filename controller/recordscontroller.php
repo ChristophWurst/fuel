@@ -25,7 +25,8 @@ class RecordsController extends Controller {
 	private $logger;
 	private $userId;
 
-	public function __construct($appName, IRequest $request, RecordService $service, Logger $logger, $userId) {
+	public function __construct($appName, IRequest $request,
+		RecordService $service, Logger $logger, $userId) {
 		parent::__construct($appName, $request);
 		$this->service = $service;
 		$this->logger = $logger;
@@ -60,8 +61,8 @@ class RecordsController extends Controller {
 	}
 
 	/**
-	 * 
 	 * @NoAdminRequired
+	 * @ValidateRecord
 	 * 
 	 * @param int $odo
 	 * @param float $fuel
@@ -78,8 +79,8 @@ class RecordsController extends Controller {
 	}
 
 	/**
-	 * 
 	 * @NoAdminRequired
+	 * @ValidateRecord
 	 * 
 	 * @param int id
 	 * @param int $odo
@@ -92,7 +93,8 @@ class RecordsController extends Controller {
 	public function update($id, $odo, $fuel, $price, $date, $vehicleId) {
 		//TODO: check if user owns vehicle
 		return $this->handleNotFound(function() use ($id, $odo, $fuel, $price, $date, $vehicleId) {
-				$this->service->update($id, $odo, $fuel, $price, $date, $vehicleId, $this->userId);
+				$this->service->update($id, $odo, $fuel, $price, $date, $vehicleId,
+					$this->userId);
 			});
 	}
 

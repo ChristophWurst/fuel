@@ -19,6 +19,7 @@ interface IValidator {
 	 *
 	 * @param string $name
 	 * @param mixed $value
+	 * @return bool validation result
 	 */
 	public function validateRequired($name, $value);
 
@@ -28,6 +29,7 @@ interface IValidator {
 	 * @param string $name
 	 * @param mixed $value
 	 * @param int $length
+	 * @return bool validation result
 	 */
 	public function validateMinLength($name, $value, $length);
 
@@ -37,8 +39,30 @@ interface IValidator {
 	 * @param string $name
 	 * @param mixed $value
 	 * @param int $length
+	 * @return bool validation result
 	 */
 	public function validateMaxLength($name, $value, $length);
+
+	/**
+	 * @param string $name
+	 * @param mixed $value
+	 * @return bool validation result
+	 */
+	public function validateInt($name, $value);
+
+	/**
+	 * @param string $name
+	 * @param mixed $value
+	 * @return bool validation result
+	 */
+	public function validateFloat($name, $value);
+
+	/**
+	 * @param string $name
+	 * @param mixed $value
+	 * @return bool validation result
+	 */
+	public function validateDate($name, $value);
 
 	/**
 	 * Get all validation errors
