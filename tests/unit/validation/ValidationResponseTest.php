@@ -9,6 +9,9 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
+
+namespace OCA\Fuel\Test\Unit;
+
 use PHPUnit_Framework_TestCase;
 use OC\AppFramework\Http;
 use OCA\Fuel\Validation\Validator;
@@ -37,7 +40,8 @@ class ValidationResponseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testHasHttpStatus() {
-		$this->assertSame(Http::STATUS_UNPROCESSABLE_ENTITY, $this->response->getStatus());
+		$this->assertSame(Http::STATUS_UNPROCESSABLE_ENTITY,
+			$this->response->getStatus());
 	}
 
 }

@@ -9,6 +9,9 @@
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @copyright Christoph Wurst 2015
  */
+
+namespace OCA\Fuel\Test\Unit;
+
 use PHPUnit_Framework_TestCase;
 use OCA\Fuel\Validation\ValidationException;
 use OCA\Fuel\Validation\IValidator;

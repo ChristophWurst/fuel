@@ -125,4 +125,41 @@ class RecordValidationMiddlewareTest extends PHPUnit_Framework_TestCase {
 		$this->middleware->beforeController(null, null);
 	}
 
+	/**
+	 * @expectedException \OCA\Fuel\Validation\ValidationException
+	 */
+	public function testNoData() {
+		$odo = null;
+		$date = null;
+		$fuel = null;
+		$price = null;
+		$data = [
+			['odo' => $odo],
+			['date' => $date],
+			['fuel' => $fuel],
+			['price' => $price],
+		];
+
+		$this->reflector->expects($this->once())
+			->method('hasAnnotation')
+			->will($this->returnValue(true));
+		$this->request->expects($this->any())
+			->method('getParam')
+			->will($this->returnValueMap($data));
+		$this->validator->expects($this->exactly(4))
+			->method('validateRequired')
+			->will($this->returnValue(false));
+		$this->validator->expects($this->never())
+			->method('validateInt');
+		$this->validator->expects($this->never())
+			->method('validateDate');
+		$this->validator->expects($this->never())
+			->method('validateFloat');
+		$this->validator->expects($this->once())
+			->method('fails')
+			->will($this->returnValue(true));
+
+		$this->middleware->beforeController(null, null);
+	}
+
 }

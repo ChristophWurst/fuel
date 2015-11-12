@@ -16,13 +16,14 @@ use PHPUnit_Framework_TestCase;
 use OCP\IRequest;
 use OCP\IL10N;
 use OC\AppFramework\Http;
+use OCP\AppFramework\Http\DataResponse;
 use OCA\Fuel\Controller\VehiclesController;
 use OCA\Fuel\Service\Logger;
 use OCA\Fuel\Service\NotFoundException;
 use OCA\Fuel\Service\RecordService;
 use OCA\Fuel\Service\VehicleService;
 
-class VehicleControllerTest extends PHPUnit_Framework_TestCase {
+class VehiclesControllerTest extends PHPUnit_Framework_TestCase {
 
 	protected $controller;
 	protected $request;
@@ -54,6 +55,48 @@ class VehicleControllerTest extends PHPUnit_Framework_TestCase {
 			$this->userId, $this->l10n, $this->logger);
 	}
 
+	public function testIndex() {
+		$vehicles = 'vehicles';
+		$this->vehicleService->expects($this->once())
+			->method('findAll')
+			->with($this->userId)
+			->will($this->returnValue($vehicles));
+
+		$expected = new DataResponse($vehicles);
+		$actual = $this->controller->index();
+
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testShow() {
+		$id = 123;
+		$vehicle = 'vehicle';
+
+		$this->vehicleService->expects($this->once())
+			->method('find')
+			->with($id, $this->userId)
+			->will($this->returnValue($vehicle));
+
+		$expected = new DataResponse($vehicle);
+		$actual = $this->controller->show($id);
+
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testCreate() {
+		$name = 'My Car';
+		$vehicle = 'vehicle';
+
+		$this->vehicleService->expects($this->once())
+			->method('create')
+			->with($name, $this->userId)
+			->will($this->returnValue($vehicle));
+
+		$actual = $this->controller->create($name);
+
+		$this->assertEquals($vehicle, $actual);
+	}
+
 	public function testUpdate() {
 		$vehicle = 'test vehicle';
 		$this->vehicleService->expects($this->once())
@@ -74,6 +117,21 @@ class VehicleControllerTest extends PHPUnit_Framework_TestCase {
 		$result = $this->controller->update(17, 'name');
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $result->getStatus());
+	}
+
+	public function testDestroy() {
+		$id = 123;
+		$vehicle = 'vehicle';
+
+		$this->vehicleService->expects($this->once())
+			->method('delete')
+			->with($id, $this->userId)
+			->will($this->returnValue($vehicle));
+
+		$expected = new DataResponse($vehicle);
+		$actual = $this->controller->destroy($id);
+
+		$this->assertEquals($expected, $actual);
 	}
 
 }
