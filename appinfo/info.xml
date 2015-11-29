@@ -2,10 +2,10 @@
 <info>
     <id>fuel</id>
     <name>Fuel</name>
-    <description>My first ownCloud app</description>
+    <description>Fuel tracking app</description>
     <licence>AGPL</licence>
     <author>Christoph Wurst</author>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <namespace>Fuel</namespace>
     <category>tools</category>
     <dependencies>
