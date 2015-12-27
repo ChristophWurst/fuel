@@ -44,6 +44,13 @@ define(function (require) {
 			});
 
 			require('app').vehiclesRegion.show(vehiclesView);
+
+			// Load first vehicle
+			var firstVehicle = vehicles.first();
+			if (firstVehicle) {
+				require('app').trigger('vehicle:show', firstVehicle.get('id'));
+			}
+
 			defer.resolve(vehicles);
 		});
 
