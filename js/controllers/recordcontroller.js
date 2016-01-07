@@ -32,7 +32,8 @@ define(function (require) {
 			}
 				
 			var recordsView = new RecordColumn({
-				collection: records
+				collection: records,
+				vehicleId: vehicleId
 			});
 
 			// Update statistics

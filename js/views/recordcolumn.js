@@ -17,15 +17,19 @@ define(function (require) {
 	return Marionette.LayoutView.extend({
 		template: '#record-list-template',
 		id: 'record-column',
+		vehicleId: null,
 		regions: {
 			newRecord: '#new-record',
 			recordList: '#record-list'
 		},
 		initialize: function (options) {
 			this.collection = options.collection;
+			this.vehicleId = options.vehicleId;
 		},
 		onShow: function () {
-			var newRecordView = new NewRecordView();
+			var newRecordView = new NewRecordView({
+				vehicleId: this.vehicleId
+			});
 			this.newRecord.show(newRecordView);
 			var recordList = new RecordListView({
 				collection: this.collection

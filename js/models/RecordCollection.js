@@ -11,7 +11,7 @@
  */
 
 define(function (require) {
-	'use strinct';
+	'use strict';
 
 	var Backbone = require('backbone'),
 			Record = require('models/Record');
@@ -19,9 +19,7 @@ define(function (require) {
 	return Backbone.Collection.extend({
 		model: Record,
 		comparator: function (r1, r2) {
-			var d1 = new Date(r1.get('date'));
-			var d2 = new Date(r2.get('date'));
-			return d1 < d2;
+			return parseInt(r1.get('odo')) < parseInt(r2.get('odo'));
 		},
 		vehicleId: null,
 		url: null,

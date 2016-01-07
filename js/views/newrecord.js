@@ -15,13 +15,13 @@ define(function (require) {
 		Record = require('models/Record');
 
 	return Marionette.ItemView.extend({
-		app: null,
+		vehicleId: null,
 		template: '#new-record-template',
 		events: {
 			'submit form': 'submit'
 		},
 		initialize: function (options) {
-			this.app = options.app;
+			this.vehicleId = options.vehicleId;
 		},
 		submit: function (e) {
 			e.preventDefault();
@@ -29,7 +29,8 @@ define(function (require) {
 				odo: this.$('input[name=odo]').val(),
 				date: this.$('input[name=date]').val(),
 				fuel: this.$('input[name=fuel]').val(),
-				price: this.$('input[name=price]').val()
+				price: this.$('input[name=price]').val(),
+				vehicleId: this.vehicleId
 			};
             this.trigger('form:submit', data);
 		}
