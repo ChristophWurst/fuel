@@ -32,7 +32,7 @@ return [
 			'url' => '/api/0.1/vehicles'
 		],
 		'records_api' => [
-			'url' => '/api/0.1/records'
+			'url' => '/api/0.1/vehicles/{vehicleId}/records'
 		],
 	],
 	'routes' => [
