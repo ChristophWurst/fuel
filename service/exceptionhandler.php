@@ -16,6 +16,9 @@ use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
 trait ExceptionHandler {
 
+	/**
+	 * @param \Exception $e
+	 */
 	protected function handleException($e) {
 		if ($e instanceof DoesNotExistException || $e instanceof MultipleObjectsReturnedException) {
 			throw new DoesNotExistException($e->getMessage());
