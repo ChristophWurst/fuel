@@ -18,7 +18,7 @@ script('fuel', 'fuel');
 <script src="<?php print_unescaped($base) ?>js/tags/fuel-app.html" type="riot/tag" nonce="<?php p($nonce); ?>"></script>
 
 <script type="text/javascript" nonce="<?php p($nonce); ?>">
-		console.log('hello darkness');
-
+		console.log('Mounting tags …');
 		riot.mount('fuel-app');
+		console.log('Tags mounted.');
 </script>
