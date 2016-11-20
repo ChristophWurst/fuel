@@ -3436,6 +3436,9 @@ riot.compile = (function () {
       if (url) js += '\n//# sourceURL=' + url + '.js'
 
       node.text = js
+	  // Nextcloud patch
+	  node.setAttribute('nonce', btoa(OC.requestToken));
+	  // END Nextcloud patch
       root.appendChild(node)
       root.removeChild(node)
     }
