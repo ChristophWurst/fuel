@@ -1,43 +1,24 @@
 <?php
+$nonce = \OC::$server->getContentSecurityPolicyNonceManager()->getNonce();
+$base = \OC::$server->getURLGenerator()->linkTo('fuel', '');
+
 /**
  * JavaScript libraries
  */
-script('fuel', 'lib/node_modules/requirejs/require');
+script('fuel', 'vendor/riot/riot+compiler');
 
 /**
  * Main JS file
  */
-script('fuel', 'require_config');
-
-/**
- * CSS style sheets
- */
-style('fuel', 'style');
+script('fuel', 'fuel');
 ?>
 
-<div id="app">
-	<div id="app-navigation">
-		<?php print_unescaped($this->inc('part.navigation')); ?>
-		<?php print_unescaped($this->inc('part.settings')); ?>
-	</div>
+<fuel-app id="app"></fuel-app>
 
-	<div id="app-content">
-		<div id="app-content-wrapper">
-			<div id="records"></div>
-			<div id="statistics"></div>
-		</div>
-	</div>
-</div>
+<script src="<?php print_unescaped($base) ?>js/tags/fuel-app.html" type="riot/tag" nonce="<?php p($nonce); ?>"></script>
 
-<?php
-/**
- * Templates
- */
-print_unescaped($this->inc('part.new-vehicle'));
-print_unescaped($this->inc('part.vehicle-list-item'));
-print_unescaped($this->inc('part.vehicle-not-found'));
-print_unescaped($this->inc('part.new-record'));
-print_unescaped($this->inc('part.record-list'));
-print_unescaped($this->inc('part.record-list-item'));
-print_unescaped($this->inc('part.statistics'));
-print_unescaped($this->inc('part.vehicle-import'));
+<script type="text/javascript" nonce="<?php p($nonce); ?>">
+		console.log('hello darkness');
+
+		riot.mount('fuel-app');
+</script>

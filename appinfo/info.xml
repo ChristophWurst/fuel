@@ -2,13 +2,13 @@
 <info>
     <id>fuel</id>
     <name>Fuel</name>
-    <description>My first ownCloud app</description>
+    <description>Fuel consumption tracker for vehicles</description>
     <licence>AGPL</licence>
     <author>Christoph Wurst</author>
-    <version>0.0.3</version>
+    <version>0.1.0</version>
     <namespace>Fuel</namespace>
     <category>tools</category>
     <dependencies>
-        <owncloud min-version="8" />
+        <nextcloud min-version="11" />
     </dependencies>
 </info>
