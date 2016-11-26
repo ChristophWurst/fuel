@@ -14,7 +14,7 @@
 				<h3>Fuel consumption</h3>
 			</div>
 			<div class="chart-container">
-				<line-chart chart="{ chartOptions(records, 'id') }"></line-chart>
+				<line-chart chart="{ chartOptions(records, 'id', 'Fuel consumption') }"></line-chart>
 			</div>
 		</div>
 		<div class="tile">
@@ -22,7 +22,7 @@
 				<h3>Odometer</h3>
 			</div>
 			<div class="chart-container">
-				<line-chart chart="{ chartOptions(records, 'odo') }"></line-chart>
+				<line-chart chart="{ chartOptions(records, 'odo', 'Odometer') }"></line-chart>
 			</div>
 		</div>
 		<div class="tile">
@@ -30,7 +30,7 @@
 				<h3>Price</h3>
 			</div>
 			<div class="chart-container">
-				<line-chart chart="{ chartOptions(records, 'price') }"></line-chart>
+				<line-chart chart="{ chartOptions(records, 'price', 'Price') }"></line-chart>
 			</div>
 		</div>
 	</div>
@@ -42,7 +42,7 @@
 		self.averageConsumption = '-';
 		self.averagePrice = '-';
 
-		self.chartOptions = function(collection, attribute) {
+		self.chartOptions = function(collection, attribute, label) {
 			const labels = collection.map(function(record) {
 				return record.date;
 			});
@@ -55,16 +55,20 @@
 					labels: labels,
 					datasets: [
 						{
-							label: 'My Data',
+							label: label,
 							data: data
 						}
 					]
 				},
 				options: {
 					responsive: true,
+					datasetFill: false,
 					scaleIntegersOnly: false,
 					scaleFontSize: 10,
-					showTooltips: true
+					showTooltips: true,
+					pointDot: false,
+					datasetStroke: true,
+					maintainAspectRatio: false
 				}
 			};
 		};
