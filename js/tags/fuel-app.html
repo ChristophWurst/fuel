@@ -1,5 +1,5 @@
 <fuel-app>
-	<div id="app-navigation"></div>
+	<navigation id="app-navigation"></navigation>
 	<div id="app-content">
 		<div id="app-content-wrapper">
 			<div id="records"></div>
@@ -8,6 +8,10 @@
 	</div>
 
 	<script>
-		console.log('<fuel-app> mounted');
+		var self = this;
+
+		self.on('mount', function() {
+			RiotControl.trigger('vehicles:init');
+		});
 	</script>
 </fuel-app>

@@ -15,7 +15,7 @@ namespace OCA\Fuel\Service;
 use Exception;
 use OCP\ILogger;
 
-class Logger implements ILogger {
+class Logger {
 
 	private $logger;
 	private $context;
