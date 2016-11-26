@@ -17,7 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "riot": "riotjs#^3.0.0",
+    "riot": "riotjs#^3.0.1",
     "chart.js": "^2.4.0"
   }
 }

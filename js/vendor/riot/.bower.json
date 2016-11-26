@@ -1,6 +1,6 @@
 {
   "name": "riot",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A React-like user interface micro-library",
   "homepage": "http://riotjs.com/",
   "repository": {
@@ -52,13 +52,13 @@
     "!/riot+compiler.min.js"
   ],
   "main": "riot.js",
-  "_release": "3.0.0",
+  "_release": "3.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "v3.0.0",
-    "commit": "790cca5ce714b107afd3449ade603e70e08a6180"
+    "tag": "v3.0.1",
+    "commit": "c3b4efaa5e0a3ae1618cfa24a6d42196c12a6981"
   },
   "_source": "https://github.com/moot/riotjs.git",
-  "_target": "^3.0.0",
+  "_target": "^3.0.1",
   "_originalSource": "riotjs"
 }
