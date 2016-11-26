@@ -2,12 +2,15 @@
 $nonce = \OC::$server->getContentSecurityPolicyNonceManager()->getNonce();
 $base = \OC::$server->getURLGenerator()->linkTo('fuel', '');
 
+style('fuel', 'fuel');
+
 /**
  * JavaScript libraries
  */
 script('fuel', 'vendor/riot/riot+compiler');
 script('fuel', 'riotcontrol');
 script('fuel', 'vehiclestore');
+script('fuel', 'recordstore');
 
 /**
  * Main JS file
@@ -19,12 +22,13 @@ script('fuel', 'fuel');
 
 <script src="<?php print_unescaped($base) ?>js/tags/fuel-app.html" type="riot/tag" nonce="<?php p($nonce); ?>"></script>
 <script src="<?php print_unescaped($base) ?>js/tags/navigation.html" type="riot/tag" nonce="<?php p($nonce); ?>"></script>
+<script src="<?php print_unescaped($base) ?>js/tags/record-list.html" type="riot/tag" nonce="<?php p($nonce); ?>"></script>
 
 <script type="text/javascript" nonce="<?php p($nonce); ?>">
 	console.log('Mounting tags …');
 
-	vehicleStore = new VehicleStore();
-	RiotControl.addStore(vehicleStore);
+	RiotControl.addStore(new VehicleStore());
+	RiotControl.addStore(new RecordStore());
 
 	riot.mount('*');
 </script>

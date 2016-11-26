@@ -1,6 +1,6 @@
 /* global riot, OC */
 
-(function(global, $, riot, OC) {
+(function(global, $, riot, RiotControl, OC) {
 	'use strict';
 
 	function VehicleStore() {
@@ -20,10 +20,13 @@
 				success: function(vehicles) {
 					self.vehicles = vehicles;
 					self.trigger('vehicles:changed', vehicles);
+					if (vehicles.length) {
+						RiotControl.trigger('records:load', vehicles[0]);
+					}
 				}
 			});
 		});
 	}
 
 	global.VehicleStore = VehicleStore;
-})(window, $, riot, OC);
+})(window, $, riot, RiotControl, OC);

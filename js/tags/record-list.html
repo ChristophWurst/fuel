@@ -1,0 +1,38 @@
+<record-list>
+	<div id="new-record"></div>
+	<ul id="record-list">
+		<li each="{ records }"
+		    class="record-container">
+			<div class="record-date">
+				{ date }{id}
+			</div>
+			<div class="record-odo">
+				{ odo }
+			</div>
+			<div class="record-fuel">
+				{ fuel }
+			</div>
+			<div class="record-distance">
+				{ addSign(distance) }km
+			</div>
+			<div class="record-consumption">
+				{ consumption }l/100km
+			</div>
+		</li>
+	</ul>
+
+	<script>
+		var self = this;
+
+		self.addSign = function(value) {
+			return value > 0 ? '+' + value : value;
+		};
+
+		self.records = [];
+
+		RiotControl.on('records:changed', function(records) {
+			self.records = records;
+			self.update();
+		});
+	</script>
+</record-list>

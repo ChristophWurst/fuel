@@ -1,7 +1,8 @@
 {
 	"elements": {
 		"navigation": {},
-		"fuel-app": {}
+		"fuel-app": {},
+		"record-list": {}
 	},
 	"attributes": {}
 }

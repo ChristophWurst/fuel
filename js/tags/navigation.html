@@ -1,7 +1,7 @@
 <navigation>
 	<ul>
 		<li each={ vehicles }>
-		    <a href="#{id}">{ name }</a>
+		    <a href="#{id}" onclick="{ loadVehicle }">{ name }</a>
 		</li>
 	</ul>
 
@@ -9,6 +9,11 @@
 		var self = this;
 
 		self.vehicles = [];
+		
+		self.loadVehicle = function(e) {
+			var vehicle = e.item;
+			RiotControl.trigger('records:load', vehicle);
+		};
 
 		RiotControl.on('vehicles:changed', function(vehicles) {
 			self.vehicles = vehicles;
