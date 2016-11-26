@@ -1,6 +1,6 @@
 {
   "name": "riot",
-  "version": "2.6.7",
+  "version": "3.0.0",
   "description": "A React-like user interface micro-library",
   "homepage": "http://riotjs.com/",
   "repository": {
@@ -12,6 +12,7 @@
     "Richard Bondi https://github.com/rsbondi",
     "Gianluca Guarini https://github.com/GianlucaGuarini",
     "Tsutomu Kawamura https://github.com/cognitom",
+    "Grant Marvin     https://github.com/rogueg",
     "Alberto Martínez https://github.com/aMarCruz",
     "Tero Piirainen  https://github.com/tipiirai"
   ],
@@ -51,13 +52,13 @@
     "!/riot+compiler.min.js"
   ],
   "main": "riot.js",
-  "_release": "2.6.7",
+  "_release": "3.0.0",
   "_resolution": {
     "type": "version",
-    "tag": "v2.6.7",
-    "commit": "b078b757adb1ecdd328cc65464ccd5fca4861253"
+    "tag": "v3.0.0",
+    "commit": "790cca5ce714b107afd3449ade603e70e08a6180"
   },
   "_source": "https://github.com/moot/riotjs.git",
-  "_target": "^2.6.7",
+  "_target": "^3.0.0",
   "_originalSource": "riotjs"
 }

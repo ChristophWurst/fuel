@@ -1,6 +1,8 @@
 {
 	"elements": {
+		"vehicle-statistics": {},
 		"navigation": {},
+		"line-chart": {},
 		"fuel-app": {},
 		"record-list": {}
 	},

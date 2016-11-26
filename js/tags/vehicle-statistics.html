@@ -1,0 +1,89 @@
+<vehicle-statistics>
+	<div class="charts">
+		<div class="tile">
+			<div>
+				'Average fuel consumption: { averageConsumption }
+			</div>
+			<div>
+				Average price: { averagePrice }
+			</div>
+
+		</div>
+		<div class="tile">
+			<div class="chart-title">
+				<h3>Fuel consumption</h3>
+			</div>
+			<div class="chart-container">
+				<line-chart chart="{ chartOptions(records, 'id') }"></line-chart>
+			</div>
+		</div>
+		<div class="tile">
+			<div class="chart-title">
+				<h3>Odometer</h3>
+			</div>
+			<div class="chart-container">
+				<line-chart chart="{ chartOptions(records, 'odo') }"></line-chart>
+			</div>
+		</div>
+		<div class="tile">
+			<div class="chart-title">
+				<h3>Price</h3>
+			</div>
+			<div class="chart-container">
+				<line-chart chart="{ chartOptions(records, 'price') }"></line-chart>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const self = this;
+
+		self.records = [];
+		self.averageConsumption = '-';
+		self.averagePrice = '-';
+
+		self.chartOptions = function(collection, attribute) {
+			const labels = collection.map(function(record) {
+				return record.date;
+			});
+			const data = collection.map(function(record) {
+				return parseFloat(record[attribute]);
+			});
+
+			return {
+				data: {
+					labels: labels,
+					datasets: [
+						{
+							label: 'My Data',
+							data: data
+						}
+					]
+				},
+				options: {
+					responsive: true,
+					scaleIntegersOnly: false,
+					scaleFontSize: 10,
+					showTooltips: true
+				}
+			};
+		};
+
+		self.averagePriceOf = function(records) {
+			const sum = records.reduce(function(sum, record) {
+				return parseFloat(record.price) + sum;
+			}, 0.0);
+			const count = records.length;
+			if (count > 0) {
+				return sum / count;
+			}
+			return '-';
+		};
+
+		RiotControl.on('records:changed', function(records) {
+			self.records = records;
+			self.averagePrice = self.averagePriceOf(records);
+			self.update();
+		});
+	</script>
+</vehicle-statistics>

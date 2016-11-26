@@ -1,4 +1,4 @@
-/* global riot, OC */
+/* global riot, RiotControl, OC */
 
 (function(global, $, riot, RiotControl, OC) {
 	'use strict';
@@ -21,10 +21,19 @@
 					self.vehicles = vehicles;
 					self.trigger('vehicles:changed', vehicles);
 					if (vehicles.length) {
-						RiotControl.trigger('records:load', vehicles[0]);
+						self.trigger('vehicle:load', vehicles[0]);
 					}
 				}
 			});
+		});
+
+		self.on('vehicle:load', function(vehicle) {
+			self.vehicles.forEach(function(vehicle) {
+				vehicle.active = false;
+			});
+			vehicle.active = true;
+			self.trigger('vehicles:changed', self.vehicles);
+			RiotControl.trigger('records:load', vehicle);
 		});
 	}
 

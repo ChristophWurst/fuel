@@ -1,6 +1,7 @@
 <navigation>
 	<ul>
-		<li each={ vehicles }>
+		<li each="{ vehicles }"
+		    class="{ active : active }">
 		    <a href="#{id}" onclick="{ loadVehicle }">{ name }</a>
 		</li>
 	</ul>
@@ -12,7 +13,7 @@
 		
 		self.loadVehicle = function(e) {
 			var vehicle = e.item;
-			RiotControl.trigger('records:load', vehicle);
+			RiotControl.trigger('vehicle:load', vehicle);
 		};
 
 		RiotControl.on('vehicles:changed', function(vehicles) {

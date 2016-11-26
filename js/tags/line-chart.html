@@ -1,0 +1,51 @@
+<line-chart>
+
+	<canvas ref="canvas"></canvas>
+
+	<script>
+		const self = this;
+		var chart = null;
+
+		Chart.defaults.global.responsive = true;
+
+		self.on('mount', () => {
+			drawChart();
+		});
+
+		self.on('update', () => {
+			if (chart) {
+				chart.destroy();
+			}
+			drawChart();
+		});
+
+		self.on('loaded', chart => {
+			self.on('unmount', () => {
+				chart.destroy();
+			});
+		});
+
+		function drawChart() {
+			if (!opts.chart) {
+				opts.chart = {};
+			}
+
+			let ctx = self.refs.canvas.getContext('2d');
+			chart = new Chart(ctx, {
+				type: 'line',
+				data: opts.chart.data,
+				options: opts.chart.options
+			});
+			self.trigger('loaded', chart);
+		}
+	</script>
+
+	<style>
+		:scope {
+			display: inline-block;
+			width: 100%;
+		}
+
+	</style>
+
+</line-chart>
